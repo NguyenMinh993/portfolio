@@ -4,20 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="92af2d7e-e5f7-4125-8194-6c77883da113" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/DjangoProject.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/profiles_settings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/portfolio/apps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/portfolio/static/portfolio/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/portfolio/templates/portfolio/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/portfolio/templates/portfolio/photography.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/portfolio/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/portfolio/views.py" afterDir="false" />
-    </list>
+    <list default="true" id="92af2d7e-e5f7-4125-8194-6c77883da113" name="Changes" comment="done" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -98,11 +85,24 @@
       <option name="presentableId" value="Default" />
       <updated>1762436860067</updated>
       <workItem from="1762436861388" duration="5111000" />
-      <workItem from="1762447242657" duration="1950000" />
+      <workItem from="1762447242657" duration="2266000" />
     </task>
+    <task id="LOCAL-00001" summary="done">
+      <option name="closed" value="true" />
+      <created>1762449752780</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1762449752780</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="done" />
+    <option name="LAST_COMMIT_MESSAGE" value="done" />
   </component>
 </project>
