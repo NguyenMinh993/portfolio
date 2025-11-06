@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nguyen Van Minh - Software Engineer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 60px;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            animation: slideDown 0.8s ease;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #d4af37;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 45px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #d4af37;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #fff;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .contact-btn {
+            padding: 10px 25px;
+            background: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 6px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .contact-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #d4af37;
+        }
+
+        /* Hero Section */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            min-height: 100vh;
+            padding: 80px 60px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 2;
+            animation: fadeInLeft 1s ease;
+        }
+
+        .hero-content h1 {
+            font-size: 62px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            letter-spacing: -1px;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 4s ease infinite;
+            background-size: 200% 200%;
+        }
+
+        .hero-content .subtitle {
+            color: rgba(255, 255, 255, 0.7);
+            font-family: 'Space Mono', monospace;
+            font-size: 18px;
+            margin-bottom: 40px;
+            border-right: 2px solid rgba(255,255,255,.75);
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 4s steps(40, end) forwards, blink-caret .75s step-end infinite;
+        }
+
+        .contact-links {
+            display: flex;
+            gap: 30px;
+            animation: fadeInUp 1s 4s both;
+        }
+
+        .contact-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .contact-links a:hover {
+            color: #d4af37;
+        }
+
+        .hero-image {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: fadeInRight 1.5s ease;
+        }
+
+        /* Swimming Pool */
+        .swimming-pool {
+            width: 400px;
+            height: 250px;
+            background: linear-gradient(160deg, #003973, #005f9e, #003973);
+            border-radius: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+            cursor: pointer;
+            overflow: hidden;
+            animation: pool-glow 4s ease-in-out infinite;
+        }
+        .swimming-pool::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%;
+            width: 300%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: water-shine 5s linear infinite;
+        }
+
+        .swimmer {
+            position: absolute;
+            top: 50%;
+            left: 20px;
+            transform: translateY(-50%);
+            transition: left 1s ease-in-out;
+        }
+        .swimmer-body {
+            width: 40px;
+            height: 20px;
+            background: #d4af37;
+            border-radius: 10px;
+            animation: swim-bob 1s ease-in-out infinite;
+        }
+        .swimmer.swimming .swimmer-body {
+            animation: swim-bob 0.5s ease-in-out infinite, swim-kick 0.5s ease-in-out infinite;
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            transform: scale(0);
+            animation: ripple-effect 0.8s ease-out;
+            pointer-events: none;
+        }
+
+        /* Background Orbs */
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            background: #d4af37;
+            filter: blur(50px);
+            opacity: 0.15;
+            animation: orb-float 10s ease-in-out infinite;
+        }
+
+        /* Cyber Pet */
+        .cyber-pet {
+            position: absolute;
+            left: 10%;
+            top: 90%;
+            transform: translate(-50%, -50%);
+            z-index: 999;
+            transition: left 0.8s ease-in-out, top 0.8s ease-in-out;
+        }
+        .pet-body { width: 60px; height: 40px; background: linear-gradient(135deg, #d4af37, #c9a236); border-radius: 50% / 30px; position: relative; z-index: 2; }
+        .pet-head { width: 30px; height: 30px; background: linear-gradient(135deg, #d4af37, #c9a236); border-radius: 50%; position: absolute; top: -15px; left: 15px; z-index: 3; border: 2px solid rgba(255,255,255,0.1); }
+        .pet-eye { width: 6px; height: 6px; background: #1a1a1a; border-radius: 50%; position: absolute; top: 10px; }
+        .pet-eye.left { left: 7px; }
+        .pet-eye.right { right: 7px; }
+        .pet-tail { width: 25px; height: 10px; background: #d4af37; border-radius: 0 50% 50% 0; position: absolute; top: 15px; left: -20px; transform-origin: 100% 50%; animation: wag 1s ease-in-out infinite alternate; z-index: 1; }
+        .cyber-pet.running .pet-body { animation: pet-bounce 0.3s ease-out infinite alternate; }
+        .cyber-pet.running .pet-tail { animation: wag 0.2s ease-in-out infinite alternate; }
+
+        /* Sections */
+        .section { padding: 100px 60px; }
+        .section-title { text-align: center; font-size: 48px; font-weight: 700; margin-bottom: 60px; animation: fadeInUp 1s ease; }
+        .card { background: rgba(0, 0, 0, 0.2); border-radius: 12px; padding: 40px; border: 1px solid rgba(255, 255, 255, 0.1); margin-bottom: 40px; transition: transform 0.3s ease, box-shadow 0.3s ease; animation: fadeInUp 1s ease; animation-fill-mode: both; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); }
+        .card:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5); }
+        .card h3 { font-size: 28px; margin-bottom: 10px; color: #fff; }
+        .card .tech { font-size: 14px; color: #d4af37; margin-bottom: 20px; font-weight: 500; }
+        .card ul { color: rgba(255, 255, 255, 0.7); line-height: 1.8; list-style-position: outside; padding-left: 20px; }
+        .card li { margin-bottom: 10px; }
+        .skills-list { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 15px; }
+        .skills-list li { background: rgba(255, 255, 255, 0.05); padding: 10px 20px; border-radius: 8px; font-size: 14px; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .github-button { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #d4af37; border: none; border-radius: 6px; color: #1a1a1a; text-decoration: none; font-weight: 600; transition: all 0.3s; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); }
+        .github-button:hover { background: #c7a432; transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); }
+
+        /* Animations */
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInLeft { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeInRight { from { opacity: 0; transform: translateX(50px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes gradientShift { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: rgba(255,255,255,.75); } }
+        @keyframes orb-float { 0%, 100% { transform: translateY(0) scale(1); } 50% { transform: translateY(-50px) scale(1.2); } }
+        @keyframes pool-glow { 0%, 100% { box-shadow: 0 0 15px rgba(0, 95, 158, 0.3); } 50% { box-shadow: 0 0 30px rgba(0, 95, 158, 0.6); } }
+        @keyframes water-shine { from { left: -100%; } to { left: 100%; } }
+        @keyframes swim-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
+        @keyframes swim-kick { 0%, 100% { border-radius: 50% / 30px; } 50% { border-radius: 40% / 40px; } }
+        @keyframes ripple-effect { to { transform: scale(4); opacity: 0; } }
+        @keyframes wag { 0% { transform: rotate(0deg); } 100% { transform: rotate(25deg); } }
+        @keyframes pet-bounce { 0% { transform: translateY(0); } 100% { transform: translateY(-8px); } }
+
+        /* Responsive */
+        @media (max-width: 1024px) { .hero { grid-template-columns: 1fr; text-align: center; } .hero-content { order: 2; } .hero-image { order: 1; margin-bottom: 40px; } .contact-links { justify-content: center; } }
+        @media (max-width: 768px) { nav { padding: 20px 30px; } .nav-links { display: none; } .hero { padding: 120px 30px 60px; } .hero-content h1 { font-size: 42px; } .section { padding: 80px 30px; } }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="{% url 'index' %}" class="logo">Nguyen Van Minh</a>
+        <ul class="nav-links">
+            <li><a href="#profile">Profile</a></li>
+            <li><a href="#experience">Experience</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#activities">Activities</a></li>
+            <li><a href="{% url 'photography' %}">Photography</a></li>
+        </ul>
+        <a href="mailto:nguyenminh090903@gmail.com" class="contact-btn">Contact Me</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <!-- Background Orbs -->
+        <div class="orb" style="top: 10%; left: 10%; width: 200px; height: 200px; animation-delay: 0s;"></div>
+        <div class="orb" style="top: 50%; left: 50%; width: 300px; height: 300px; animation-delay: 2s;"></div>
+        <div class="orb" style="bottom: 20%; right: 15%; width: 150px; height: 150px; animation-delay: 4s;"></div>
+
+        <div class="hero-content">
+            <h1 class="gradient-text">Nguyen Van Minh</h1>
+            <p class="subtitle">Fresher Full Stack Developer</p>
+            <div class="contact-links">
+                <a href="https://www.linkedin.com/in/văn-minh-nguyễn" target="_blank">LinkedIn</a>
+                <a href="https://github.com/NguyenMinh993" target="_blank">GitHub</a>
+                <a href="mailto:nguyenminh090903@gmail.com">Email</a>
+            </div>
+        </div>
+        <div class="hero-image">
+            <!-- Interactive Swimming Pool -->
+            <div id="pool" class="swimming-pool">
+                <div id="swimmer" class="swimmer">
+                    <div class="swimmer-body"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section id="profile" class="section">
+        <div class="card" style="animation-delay: 0.1s;">
+            <h2 class="section-title" style="margin-bottom: 20px;">Profile</h2>
+            <p style="text-align: center; max-width: 700px; margin: 0 auto; color: rgba(255,255,255,0.7);">I’ve completed my graduation project and all degree requirements in Software Engineering at FPT University Can Tho and am currently awaiting my diploma. I’m available full-time and can contribute on both Frontend and Backend (full stack). I’m a curious, adaptable learner eager to gain hands-on experience through real-world projects.</p>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience" class="section">
+        <h2 class="section-title">Experience</h2>
+        <div class="card" style="animation-delay: 0.2s;">
+            <h3>Full Stack Developer | Sell Course Platform</h3>
+            <div class="tech">NestJS, Next.js, TypeScript, WebSockets, Node.js, PostgreSQL, Python, Bootstrap, Docker, Azure, n8n</div>
+            <ul>
+                <li>Built complete exam management system (CRUD operations, submission, retake)</li>
+                <li>Developed certification system with automated generation</li>
+                <li>Created admin panel for user management and analytics</li>
+                <li>Implemented wishlist system with real-time sync</li>
+                <li>Built authentication system with JWT, OAuth2, OTP, and forgot-password functionality</li>
+                <li>Integrated n8n workflows for video HLS streaming and script generation</li>
+                <li>Built WebSocket-based notification and chat system</li>
+                <li>Designed RESTful APIs with comprehensive documentation</li>
+            </ul>
+            <a href="https://github.com/Thuannnnnnn/sell_course" target="_blank" class="github-button">GitHub Link</a>
+        </div>
+        <div class="card" style="animation-delay: 0.3s;">
+            <h3>Software Developer (Intern) | UTA Solution</h3>
+            <div class="tech">HTML/CSS/JS, Swagger, MongoDB, Node.js</div>
+            <ul>
+                <li>Designed and developed user interfaces for an eLearning application using Tailwind CSS for responsive and modern UI design.</li>
+                <li>Integrated RESTful APIs to handle dynamic content and user interactions.</li>
+                <li>Implemented application logic to support key functionalities within the platform.</li>
+                <li>Wrote and executed test cases; documented test results in detailed reports to ensure quality and reliability.</li>
+            </ul>
+        </div>
+        <div class="card" style="animation-delay: 0.4s;">
+            <h3>Full Stack Developer | E-Commerce Platform</h3>
+            <div class="tech">Jakarta EE 10.0.0, Java 11, MySQL 8.2.0, JSP, JSTL, HTML/CSS, Maven, C3P0, Docker, Git</div>
+            <ul>
+                <li>User Management: Auth (login/register/reset), user profiles, admin user panel, editable dashboard.</li>
+                <li>Product Management: Catalog & categories, advanced search, comparison, image handling, admin product CRUD.</li>
+                <li>Shopping Experience: Real-time cart, checkout & payments, order history, order tracking/management.</li>
+                <li>Admin Dashboard: Centralized control for users/products/categories/orders, configuration, analytics & reports.</li>
+                <li>Quality & Deployment: Tests, modular design, Dockerized deploys, security best practices, responsive UI, clean code.</li>
+                <li>Technical Achievements: MVC architecture, efficient DB pooling, responsive UX, scalable/maintainable codebase.</li>
+            </ul>
+            <a href="https://github.com/Kane-Nguyen/project_swp" target="_blank" class="github-button">GitHub Link</a>
+        </div>
+    </section>
+
+    <!-- Skills & Activities Section -->
+    <section id="skills" class="section">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+            <div class="card" style="animation-delay: 0.5s;">
+                <h2 class="section-title" style="font-size: 36px; margin-bottom: 30px;">Skills & Abilities</h2>
+                <ul class="skills-list">
+                    <li>JavaScript</li>
+                    <li>TypeScript</li>
+                    <li>Python</li>
+                    <li>Java</li>
+                    <li>Node.js</li>
+                    <li>Next.js</li>
+                    <li>NestJS</li>
+                    <li>PostgreSQL</li>
+                    <li>MongoDB</li>
+                    <li>Docker</li>
+                    <li>Git</li>
+                    <li>RESTful APIs</li>
+                    <li>Adaptability</li>
+                    <li>Research</li>
+                    <li>English Reading/Listening</li>
+                </ul>
+            </div>
+            <div class="card" style="animation-delay: 0.6s;">
+                <h2 class="section-title" style="font-size: 36px; margin-bottom: 30px;">Activities & Certifications</h2>
+                <ul>
+                    <li>2023 International Conference on Services Computing (SCC 2023)</li>
+                    <li>Web Design for Everybody: Basics of Web Development & Coding (Coursera)</li>
+                    <li>Computer Communications (Coursera)</li>
+                    <li>Project Management Principles and Practices (Coursera)</li>
+                    <li>Software Development Lifecycle (Coursera)</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cyber Pet -->
+    <div id="cyberPet" class="cyber-pet">
+        <div class="pet-tail"></div>
+        <div class="pet-body">
+            <div class="pet-head">
+                <div class="pet-eye left"></div>
+                <div class="pet-eye right"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.card, .section-title').forEach(el => {
+            el.style.animationPlayState = 'paused';
+            observer.observe(el);
+        });
+
+        // Swimming Pool Interaction
+        const pool = document.getElementById('pool');
+        const swimmer = document.getElementById('swimmer');
+        let isSwimming = false;
+
+        pool.addEventListener('click', (e) => {
+            const poolRect = pool.getBoundingClientRect();
+            const targetX = e.clientX - poolRect.left;
+            
+            swimmer.style.left = `${targetX - swimmer.offsetWidth / 2}px`;
+
+            if (!isSwimming) {
+                isSwimming = true;
+                swimmer.classList.add('swimming');
+            }
+
+            clearTimeout(swimmer.dataset.swimTimeout);
+            swimmer.dataset.swimTimeout = setTimeout(() => {
+                swimmer.classList.remove('swimming');
+                isSwimming = false;
+            }, 1000); // Match this with the CSS transition duration
+
+            // Create and animate ripple
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            const rippleSize = Math.max(poolRect.width, poolRect.height);
+            ripple.style.width = ripple.style.height = `${rippleSize}px`;
+            ripple.style.left = `${e.clientX - poolRect.left - rippleSize / 2}px`;
+            ripple.style.top = `${e.clientY - poolRect.top - rippleSize / 2}px`;
+            pool.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 800);
+        });
+
+        // Cyber Pet movement
+        const cyberPet = document.getElementById('cyberPet');
+        let isMoving = false;
+
+        document.body.addEventListener('click', (e) => {
+            if (e.target.closest('a') || e.target.closest('button') || e.target.closest('#cyberPet') || e.target.closest('#pool')) {
+                return;
+            }
+
+            const targetX = e.clientX;
+            const targetY = e.clientY;
+
+            cyberPet.style.left = `${targetX - cyberPet.offsetWidth / 2}px`;
+            cyberPet.style.top = `${targetY - cyberPet.offsetHeight / 2}px`;
+
+            if (!isMoving) {
+                isMoving = true;
+                cyberPet.classList.add('running');
+            }
+
+            clearTimeout(cyberPet.dataset.moveTimeout);
+            cyberPet.dataset.moveTimeout = setTimeout(() => {
+                cyberPet.classList.remove('running');
+                isMoving = false;
+            }, 800);
+        });
+    </script>
+</body>
+</html>

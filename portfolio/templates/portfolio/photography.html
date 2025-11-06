@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography & Film - Nguyen Van Minh</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #2d2d2d 0%, #1a1a1a 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 25px 60px;
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            animation: slideDown 0.8s ease;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #d4af37;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 45px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #d4af37;
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: #fff;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        /* Hero & Film Sections */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            min-height: 100vh;
+            padding: 80px 60px 60px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 2;
+            animation: fadeInLeft 1s ease;
+        }
+
+        .hero-content h1 {
+            font-size: 62px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            letter-spacing: -1px;
+        }
+
+        .hero-content p {
+            color: rgba(255, 255, 255, 0.7);
+            line-height: 1.7;
+            margin-bottom: 40px;
+            max-width: 500px;
+            font-size: 15px;
+        }
+
+        /* Photo Showcase */
+        .photo-showcase {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: float 4s ease-in-out infinite;
+        }
+
+        .showcase-image {
+            position: absolute;
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .showcase-image:hover {
+            transform: scale(1.05) !important;
+            z-index: 10;
+        }
+
+        .img-1 {
+            width: 300px;
+            height: 220px;
+            transform: rotate(-10deg) translate(-30%, -10%);
+            animation: cardFloat 3.5s ease-in-out infinite;
+        }
+
+        .img-2 {
+            width: 350px;
+            height: 250px;
+            z-index: 5;
+            transform: rotate(5deg) translate(0, 0);
+            animation: cardFloat2 4s ease-in-out infinite;
+        }
+
+        .img-3 {
+            width: 280px;
+            height: 200px;
+            transform: rotate(15deg) translate(30%, 20%);
+            animation: cardFloat 3s ease-in-out infinite reverse;
+        }
+        
+        /* Film Showcase Specific Styling */
+        .film-showcase-image {
+            border: 5px solid #333;
+            box-shadow: 0 0 0 2px #d4af37, 0 20px 50px rgba(0, 0, 0, 0.5);
+            position: relative;
+            border-radius: 0; /* Remove border-radius for film strip look */
+        }
+        .film-showcase-image::before, .film-showcase-image::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: repeating-linear-gradient(90deg, #333 0, #333 8px, transparent 8px, transparent 16px);
+            z-index: 1;
+        }
+        .film-showcase-image::before { top: -10px; }
+        .film-showcase-image::after { bottom: -10px; }
+
+        /* Gallery Section */
+        .gallery-section {
+            padding: 100px 60px;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 60px;
+            animation: fadeInUp 1s ease;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .photo-item {
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            animation: fadeInUp 1s ease;
+            animation-fill-mode: both;
+        }
+        
+        .photo-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+        }
+
+        .photo-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.4s ease;
+        }
+
+        .photo-item:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Animations */
+        @keyframes slideDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInLeft { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+        @keyframes cardFloat { 0%, 100% { transform: rotate(-10deg) translate(-30%, -10%); } 50% { transform: rotate(-12deg) translate(-32%, -15%); } }
+        @keyframes cardFloat2 { 0%, 100% { transform: rotate(5deg) translate(0, 0); } 50% { transform: rotate(2deg) translate(2%, -5%); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero { grid-template-columns: 1fr; gap: 60px; text-align: center; }
+            .hero-content p { margin: 0 auto 40px; }
+            .photo-showcase { min-height: 350px; margin-top: 40px; }
+        }
+        @media (max-width: 768px) {
+            nav { padding: 20px 30px; }
+            .nav-links { display: none; }
+            .hero { padding: 120px 30px 60px; }
+            .hero-content h1 { font-size: 42px; }
+            .gallery-section { padding: 80px 30px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="{% url 'index' %}" class="logo">Nguyen Van Minh</a>
+        <ul class="nav-links">
+            <li><a href="{% url 'index' %}">Work</a></li>
+            <li><a href="{% url 'photography' %}#photography" class="active">Photography</a></li>
+            <li><a href="{% url 'photography' %}#film">Film</a></li>
+        </ul>
+    </nav>
+
+    <!-- Photography Hero Section -->
+    <section id="photography" class="hero">
+        <div class="hero-content">
+            <h1>Moments in Time</h1>
+            <p>A curated collection of moments captured through my lens. This gallery is a visual diary of my journey, exploring light, composition, and the stories that unfold in a single frame.</p>
+        </div>
+
+        <div class="photo-showcase">
+            <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=800&q=60" alt="Showcase Image 1" class="showcase-image img-1">
+            <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=800&q=60" alt="Showcase Image 2" class="showcase-image img-2">
+            <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=60" alt="Showcase Image 3" class="showcase-image img-3">
+        </div>
+    </section>
+
+    <!-- Film Hero Section -->
+    <section id="film" class="hero">
+        <div class="hero-content">
+            <h1>Film & Cinematography</h1>
+            <p>Exploring the art of storytelling through motion. This collection showcases my work in film, from short clips to cinematic sequences, focusing on narrative, mood, and visual artistry.</p>
+        </div>
+
+        <div class="photo-showcase">
+            <img src="https://images.unsplash.com/photo-1525130413817-d45c1d127c42?auto=format&fit=crop&w=900&q=60" alt="Showcase Image 4" class="showcase-image img-1 film-showcase-image">
+            <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=800&q=60" alt="Showcase Image 5" class="showcase-image img-2 film-showcase-image">
+            <img src="https://images.unsplash.com/photo-1522199755839-a2bacb67c546?auto=format&fit=crop&w=800&q=60" alt="Showcase Image 6" class="showcase-image img-3 film-showcase-image">
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section">
+        <h2 class="section-title">Gallery</h2>
+        <div class="photo-grid">
+            <div class="photo-item" style="animation-delay: 0.1s;">
+                <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=800&q=60" alt="Photograph 1">
+            </div>
+            <div class="photo-item" style="animation-delay: 0.2s;">
+                <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=800&q=60" alt="Photograph 2">
+            </div>
+            <div class="photo-item" style="animation-delay: 0.3s;">
+                <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=60" alt="Photograph 3">
+            </div>
+            <div class="photo-item" style="animation-delay: 0.4s;">
+                <img src="https://images.unsplash.com/photo-1525130413817-d45c1d127c42?auto=format&fit=crop&w=900&q=60" alt="Photograph 4">
+            </div>
+            <div class="photo-item" style="animation-delay: 0.5s;">
+                <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=800&q=60" alt="Photograph 5">
+            </div>
+            <div class="photo-item" style="animation-delay: 0.6s;">
+                <img src="https://images.unsplash.com/photo-1522199755839-a2bacb67c546?auto=format&fit=crop&w=800&q=60" alt="Photograph 6">
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Intersection Observer for scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationPlayState = 'running';
+                }
+            });
+        }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+
+        document.querySelectorAll('.photo-item, .section-title').forEach(el => {
+            el.style.animationPlayState = 'paused';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
