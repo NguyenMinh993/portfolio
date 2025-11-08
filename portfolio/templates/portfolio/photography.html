@@ -165,7 +165,7 @@
             border: 5px solid #333;
             box-shadow: 0 0 0 2px #d4af37, 0 20px 50px rgba(0, 0, 0, 0.5);
             position: relative;
-            border-radius: 0; /* Remove border-radius for film strip look */
+            border-radius: 0;
         }
         .film-showcase-image::before, .film-showcase-image::after {
             content: '';
@@ -224,6 +224,71 @@
             transform: scale(1.1);
         }
 
+        /* Contact Form */
+        #contact { padding-bottom: 120px; }
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1.5fr;
+            gap: 60px;
+            align-items: center;
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 60px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .contact-info h2 { font-size: 42px; margin-bottom: 20px; }
+        .contact-info p { color: rgba(255,255,255,0.7); margin-bottom: 30px; line-height: 1.7; }
+        .contact-details a { display: block; margin-bottom: 15px; color: rgba(255,255,255,0.8); text-decoration: none; transition: color 0.3s; }
+        .contact-details a:hover { color: #d4af37; }
+
+        .form-group { margin-bottom: 20px; }
+        .form-group input, .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 8px;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+        .form-group input:focus, .form-group textarea:focus {
+            outline: none;
+            border-color: #d4af37;
+        }
+        .form-group textarea { resize: vertical; min-height: 120px; }
+        .file-input-wrapper {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            cursor: pointer;
+            padding: 12px 20px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 6px;
+            transition: background 0.3s;
+        }
+        .file-input-wrapper:hover { background: rgba(255,255,255,0.15); }
+        .file-input-wrapper input[type=file] { position: absolute; left: 0; top: 0; opacity: 0; cursor: pointer; }
+        .file-name { margin-left: 15px; color: rgba(255,255,255,0.6); }
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            border: none;
+            border-radius: 8px;
+            color: #1a1a1a;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+        }
+        .submit-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5); }
+        #form-status { margin-top: 20px; text-align: center; }
+
         /* Animations */
         @keyframes slideDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInLeft { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
@@ -233,18 +298,8 @@
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Responsive */
-        @media (max-width: 1024px) {
-            .hero { grid-template-columns: 1fr; gap: 60px; text-align: center; }
-            .hero-content p { margin: 0 auto 40px; }
-            .photo-showcase { min-height: 350px; margin-top: 40px; }
-        }
-        @media (max-width: 768px) {
-            nav { padding: 20px 30px; }
-            .nav-links { display: none; }
-            .hero { padding: 120px 30px 60px; }
-            .hero-content h1 { font-size: 42px; }
-            .gallery-section { padding: 80px 30px; }
-        }
+        @media (max-width: 1024px) { .hero { grid-template-columns: 1fr; gap: 60px; text-align: center; } .hero-content p { margin: 0 auto 40px; } .photo-showcase { min-height: 350px; margin-top: 40px; } .contact-container { grid-template-columns: 1fr; padding: 40px; } .contact-info h2 { font-size: 36px; } }
+        @media (max-width: 768px) { nav { padding: 20px 30px; } .nav-links { display: none; } .hero { padding: 120px 30px 60px; } .hero-content h1 { font-size: 42px; } .gallery-section { padding: 80px 30px; } }
     </style>
 </head>
 <body>
@@ -253,8 +308,9 @@
         <a href="{% url 'index' %}" class="logo">Nguyen Van Minh</a>
         <ul class="nav-links">
             <li><a href="{% url 'index' %}">Work</a></li>
-            <li><a href="{% url 'photography' %}#photography" class="active">Photography</a></li>
-            <li><a href="{% url 'photography' %}#film">Film</a></li>
+            <li><a href="#photography" class="active">Photography</a></li>
+            <li><a href="#film">Film</a></li>
+            <li><a href="#contact">Contact</a></li>
         </ul>
     </nav>
 
@@ -311,6 +367,40 @@
         </div>
     </section>
 
+    <!-- Contact Section -->
+    <section id="contact" class="section">
+        <div class="contact-container">
+            <div class="contact-info">
+                <h2>Get in Touch</h2>
+                <p>Interested in a collaboration, or just want to say hello? I'd love to hear from you. Send me a message, and I'll get back to you as soon as possible.</p>
+                <div class="contact-details">
+                    <a href="mailto:nguyenminh090903@gmail.com">nguyenminh090903@gmail.com</a>
+                </div>
+            </div>
+            <form id="contactForm" enctype="multipart/form-data">
+                {% csrf_token %}
+                <input type="hidden" name="source_page" value="Job Photo">
+                <div class="form-group">
+                    <input type="email" name="email" placeholder="Your Email" required>
+                </div>
+                <div class="form-group">
+                    <textarea name="message" placeholder="Your Message" required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="attachment" class="file-input-wrapper">
+                        <span>Attach File</span>
+                        <input type="file" id="attachment" name="attachment">
+                    </label>
+                    <span id="fileName" class="file-name"></span>
+                </div>
+                <div style="text-align: center;">
+                    <button type="submit" class="submit-btn">Send Message</button>
+                </div>
+                <div id="form-status"></div>
+            </form>
+        </div>
+    </section>
+
     <script>
         // Intersection Observer for scroll animations
         const observer = new IntersectionObserver((entries) => {
@@ -321,9 +411,52 @@
             });
         }, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
 
-        document.querySelectorAll('.photo-item, .section-title').forEach(el => {
+        document.querySelectorAll('.photo-item, .section-title, .contact-container').forEach(el => {
             el.style.animationPlayState = 'paused';
             observer.observe(el);
+        });
+
+        // Contact Form Submission
+        const contactForm = document.getElementById('contactForm');
+        const formStatus = document.getElementById('form-status');
+        const attachmentInput = document.getElementById('attachment');
+        const fileNameSpan = document.getElementById('fileName');
+
+        attachmentInput.addEventListener('change', () => {
+            fileNameSpan.textContent = attachmentInput.files.length > 0 ? attachmentInput.files[0].name : '';
+        });
+
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            formStatus.textContent = 'Sending...';
+            formStatus.style.color = '#d4af37';
+
+            const formData = new FormData(this);
+
+            fetch('{% url "contact_form_submit" %}', {
+                method: 'POST',
+                body: formData,
+                headers: {
+                    'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
+                },
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    formStatus.textContent = 'Message sent successfully!';
+                    formStatus.style.color = '#28a745';
+                    contactForm.reset();
+                    fileNameSpan.textContent = '';
+                } else {
+                    formStatus.textContent = data.message || 'An error occurred.';
+                    formStatus.style.color = '#dc3545';
+                }
+            })
+            .catch(error => {
+                formStatus.textContent = 'An error occurred while sending the message.';
+                formStatus.style.color = '#dc3545';
+                console.error('Error:', error);
+            });
         });
     </script>
 </body>
