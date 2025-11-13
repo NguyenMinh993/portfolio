@@ -182,3 +182,43 @@ body {
     padding: 20px;
     margin-top: 40px;
 }
+
+/* Cyber Duck Pixel Art */
+.cyber-duck {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 0;
+}
+
+.duck-container {
+    /* Base size for one 'pixel' */
+    --pixel-size: 10px;
+    width: calc(7 * var(--pixel-size));
+    height: calc(5 * var(--pixel-size));
+}
+
+.duck-body {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    background: 
+        /* Row 1 */
+        linear-gradient(to right, transparent 0, transparent calc(2 * var(--pixel-size)), #FFD700 calc(2 * var(--pixel-size)), #FFD700 calc(4 * var(--pixel-size)), transparent calc(4 * var(--pixel-size)), transparent 100%) 0 calc(0 * var(--pixel-size)),
+        /* Row 2 */
+        linear-gradient(to right, transparent 0, transparent calc(1 * var(--pixel-size)), #FFD700 calc(1 * var(--pixel-size)), #FFD700 calc(3 * var(--pixel-size)), #000000 calc(3 * var(--pixel-size)), #000000 calc(4 * var(--pixel-size)), #FFD700 calc(4 * var(--pixel-size)), #FFD700 calc(5 * var(--pixel-size)), #FFA500 calc(5 * var(--pixel-size)), #FFA500 100%) 0 calc(1 * var(--pixel-size)),
+        /* Row 3 */
+        linear-gradient(to right, #FFD700 0, #FFD700 calc(5 * var(--pixel-size)), #FFA500 calc(5 * var(--pixel-size)), #FFA500 calc(6 * var(--pixel-size)), transparent calc(6 * var(--pixel-size)), transparent 100%) 0 calc(2 * var(--pixel-size)),
+        /* Row 4 */
+        linear-gradient(to right, transparent 0, transparent calc(1 * var(--pixel-size)), #FFD700 calc(1 * var(--pixel-size)), #FFD700 calc(6 * var(--pixel-size)), transparent calc(6 * var(--pixel-size)), transparent 100%) 0 calc(3 * var(--pixel-size)),
+        /* Row 5 */
+        linear-gradient(to right, transparent 0, transparent calc(2 * var(--pixel-size)), #FFD700 calc(2 * var(--pixel-size)), #FFD700 calc(5 * var(--pixel-size)), transparent calc(5 * var(--pixel-size)), transparent 100%) 0 calc(4 * var(--pixel-size));
+    background-size: 100% var(--pixel-size);
+    background-repeat: no-repeat;
+    image-rendering: pixelated; /* Makes the 'pixels' sharp */
+}
+
+/* Hide the original divs as they are not needed for this CSS-only approach */
+.duck-head, .duck-tail, .duck-eye, .duck-beak {
+    display: none;
+}
