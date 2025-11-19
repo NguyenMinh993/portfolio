@@ -1,0 +1,7 @@
+[build]
+builder = "NIXPACKS"
+
+[deploy]
+startCommand = "python manage.py migrate && gunicorn --bind 0.0.0.0:$PORT --workers 3 DjangoProject.wsgi:application"
+healthcheckPath = "/"
+restartPolicyType = "ON_FAILURE"
