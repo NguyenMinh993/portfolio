@@ -4,4 +4,4 @@ dj-database-url
 python-dotenv
 gunicorn
 whitenoise
-sendgrid
+sendgrid>=6.11.0
