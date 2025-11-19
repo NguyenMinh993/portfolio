@@ -257,44 +257,6 @@
             line-height: 1.6;
         }
 
-
-        /* Highlights Section */
-        .highlights {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
-            margin: 60px 0;
-        }
-        .highlight-card {
-            background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(244, 208, 63, 0.05));
-            border: 2px solid rgba(212, 175, 55, 0.3);
-            border-radius: 12px;
-            padding: 30px;
-            text-align: center;
-            transition: all 0.3s ease;
-            animation: fadeInUp 1s ease both;
-        }
-        .highlight-card:hover {
-            transform: translateY(-10px);
-            border-color: rgba(212, 175, 55, 0.6);
-            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.2);
-        }
-        .highlight-icon {
-            font-size: 48px;
-            margin-bottom: 15px;
-            filter: drop-shadow(0 0 10px rgba(212, 175, 55, 0.5));
-        }
-        .highlight-card h3 {
-            font-size: 20px;
-            color: #d4af37;
-            margin-bottom: 10px;
-        }
-        .highlight-card p {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
         /* Sections */
         .section { padding: 100px 60px; }
         .section-title { text-align: center; font-size: 48px; font-weight: 700; margin-bottom: 60px; animation: fadeInUp 1s ease; }
@@ -509,34 +471,6 @@
             </div>
         </div>
     </section>
-    <!-- Highlights Section - Key Points for HR -->
-    <section class="section" style="padding-top: 60px; padding-bottom: 40px;">
-        <h2 class="section-title">Why Hire Me?</h2>
-        <div class="highlights">
-            <div class="highlight-card" style="animation-delay: 0.1s;">
-                <div class="highlight-icon">🚀</div>
-                <h3>Full Stack Ready</h3>
-                <p>Proficient in both Frontend (Next.js, React) and Backend (NestJS, Node.js) with production experience</p>
-            </div>
-            <div class="highlight-card" style="animation-delay: 0.2s;">
-                <div class="highlight-icon">⚡</div>
-                <h3>Fast Learner</h3>
-                <p>Quickly adapt to new technologies and frameworks. Self-taught multiple tech stacks through real projects</p>
-            </div>
-            <div class="highlight-card" style="animation-delay: 0.3s;">
-                <div class="highlight-icon">💼</div>
-                <h3>Real Experience</h3>
-                <p>Built complete e-learning platform, e-commerce site, and worked as intern at UTA Solution</p>
-            </div>
-            <div class="highlight-card" style="animation-delay: 0.4s;">
-                <div class="highlight-icon">🎯</div>
-                <h3>Problem Solver</h3>
-                <p>Strong analytical skills with experience in system design, API development, and database optimization</p>
-            </div>
-        </div>
-    </section>
-
-
 
     <!-- Profile Section -->
     <section id="profile" class="section">
@@ -661,7 +595,17 @@
         </div>
     </section>
 
-    
+    <!-- Cyber Duck -->
+    <div id="cyberDuck" class="cyber-duck">
+        <div class="duck-container">
+            <div class="duck-body">
+                <div class="duck-head">
+                    <div class="duck-eye"></div>
+                    <div class="duck-beak"></div>
+                </div>
+                <div class="duck-tail"></div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -677,6 +621,71 @@
         document.querySelectorAll('.card, .section-title, .contact-container').forEach(el => {
             el.style.animationPlayState = 'paused';
             observer.observe(el);
+        });
+
+        // Cyber Duck and Pool Interaction
+        const cyberDuck = document.getElementById('cyberDuck');
+        const duckContainer = cyberDuck.querySelector('.duck-container');
+        const pool = document.getElementById('pool');
+        let isWaddling = false;
+        let lastX = 0;
+
+        function createRipple(x, y, containerRect, containerElement) {
+            const ripple = document.createElement('span');
+            ripple.classList.add('ripple');
+            const rippleSize = 50;
+            ripple.style.width = ripple.style.height = `${rippleSize}px`;
+            ripple.style.left = `${x - containerRect.left - rippleSize / 2}px`;
+            ripple.style.top = `${y - containerRect.top - rippleSize / 2}px`;
+            containerElement.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 800);
+        }
+
+        document.body.addEventListener('click', (e) => {
+            const poolRect = pool.getBoundingClientRect();
+            const isClickInsidePool = e.clientX >= poolRect.left && e.clientX <= poolRect.right && e.clientY >= poolRect.top && e.clientY <= poolRect.bottom;
+
+            if (e.target.closest('a') || e.target.closest('button') || e.target.closest('#cyberDuck') || e.target.closest('form')) {
+                return;
+            }
+
+            const targetX = e.clientX;
+            const targetY = e.clientY;
+
+            cyberDuck.style.left = `${targetX}px`;
+            cyberDuck.style.top = `${targetY}px`;
+
+            clearTimeout(cyberDuck.dataset.waddleTimeout);
+
+            if (isClickInsidePool) {
+                cyberDuck.classList.remove('waddling');
+                isWaddling = false;
+
+                setTimeout(() => {
+                    cyberDuck.classList.add('swimming');
+                    createRipple(targetX, targetY, poolRect, pool);
+                }, 800);
+
+            } else {
+                cyberDuck.classList.remove('swimming');
+
+                if (targetX < lastX) {
+                    duckContainer.style.transform = 'scaleX(-1)';
+                } else if (targetX > lastX) {
+                    duckContainer.style.transform = 'scaleX(1)';
+                }
+                lastX = targetX;
+
+                if (!isWaddling) {
+                    isWaddling = true;
+                    cyberDuck.classList.add('waddling');
+                }
+
+                cyberDuck.dataset.waddleTimeout = setTimeout(() => {
+                    cyberDuck.classList.remove('waddling');
+                    isWaddling = false;
+                }, 800);
+            }
         });
 
         // Contact Form Submission
