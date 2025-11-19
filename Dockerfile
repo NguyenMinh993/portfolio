@@ -19,4 +19,5 @@ COPY . .
 RUN python manage.py collectstatic --noinput || true
 
 # Run migrations and start gunicorn with Railway's PORT
-CMD python manage.py migrate && gunicorn --bind 0.0.0.0:${PORT:-8000} --workers 3 DjangoProject.wsgi:application
+# Use sh -c to properly expand environment variables
+CMD sh -c "python manage.py migrate && gunicorn --bind 0.0.0.0:${PORT:-8000} --workers 3 --timeout 120 DjangoProject.wsgi:application"
