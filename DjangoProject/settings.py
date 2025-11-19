@@ -29,7 +29,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'django-insecure-6n+$^sa+%qex3ye#35^1z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1').split(',')
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost,*.railway.app').split(',')
 
 
 # Application definition
