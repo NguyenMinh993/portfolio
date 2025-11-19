@@ -38,10 +38,23 @@ def contact_form_submit(request):
                 return JsonResponse({'success': True, 'message': 'Message sent successfully!'})
             except smtplib.SMTPAuthenticationError as e:
                 # This is the specific error for bad username/password
-                return JsonResponse({'success': False, 'message': 'SMTP Authentication Error: Please check your email credentials.', 'error_details': str(e)})
+                import traceback
+                return JsonResponse({
+                    'success': False, 
+                    'message': 'SMTP Authentication Error', 
+                    'error': str(e),
+                    'traceback': traceback.format_exc()
+                })
             except Exception as e:
                 # Catch any other email-related errors
-                return JsonResponse({'success': False, 'message': 'An error occurred while sending the email.', 'error_details': str(e)})
+                import traceback
+                return JsonResponse({
+                    'success': False, 
+                    'message': 'Email Error', 
+                    'error': str(e),
+                    'error_type': type(e).__name__,
+                    'traceback': traceback.format_exc()
+                })
         else:
             # Form validation failed
             return JsonResponse({'success': False, 'message': 'Invalid form data. Please check the fields.', 'errors': form.errors})
