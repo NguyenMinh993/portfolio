@@ -143,15 +143,14 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# Email settings - Temporarily use console backend for all environments
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-# Production email settings (commented out until Gmail App Password is fixed)
-# if not DEBUG:
-#     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-#     EMAIL_HOST = 'smtp.gmail.com'
-#     EMAIL_PORT = 587
-#     EMAIL_USE_TLS = True
-#     EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-#     EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-#     DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# Email settings using SendGrid
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+else:
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_HOST = 'smtp.sendgrid.net'
+    EMAIL_PORT = 587
+    EMAIL_USE_TLS = True
+    EMAIL_HOST_USER = 'apikey'  # This is always 'apikey' for SendGrid
+    EMAIL_HOST_PASSWORD = os.environ.get('SENDGRID_API_KEY')
+    DEFAULT_FROM_EMAIL = os.environ.get('FROM_EMAIL', 'nguyenminh090903@gmail.com')
