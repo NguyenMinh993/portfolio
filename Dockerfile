@@ -18,8 +18,8 @@ COPY . /app/
 # Expose port
 EXPOSE 8000
 
-# Run collectstatic
-RUN python manage.py collectstatic --noinput
+# Run collectstatic (skip if no static files configured)
+RUN python manage.py collectstatic --noinput || true
 
-# Run gunicorn
-CMD ["gunicorn", "--bind", ":8000", "--workers", "3", "DjangoProject.wsgi:application"]
+# Run migrations and start gunicorn
+CMD python manage.py migrate && gunicorn --bind :8000 --workers 3 DjangoProject.wsgi:application

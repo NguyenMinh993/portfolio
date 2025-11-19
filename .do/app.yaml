@@ -1,0 +1,30 @@
+name: portfolio
+services:
+  - name: web
+    github:
+      branch: main
+      deploy_on_push: true
+    dockerfile_path: Dockerfile
+    http_port: 8000
+    instance_count: 1
+    instance_size_slug: basic-xxs
+    routes:
+      - path: /
+    envs:
+      - key: DEBUG
+        value: "False"
+      - key: SECRET_KEY
+        value: "django-insecure-6n+$^sa+%qex3ye#35^1zjb11s$l(+^i9w7&-r84c28r_tk*7s"
+        type: SECRET
+      - key: ALLOWED_HOSTS
+        value: "${APP_DOMAIN}"
+      - key: EMAIL_HOST_USER
+        value: "nguyenminh090903@gmail.com"
+      - key: EMAIL_HOST_PASSWORD
+        value: "vtgmfkpwmuthqinn"
+        type: SECRET
+    run_command: gunicorn --bind :8000 --workers 3 DjangoProject.wsgi:application
+databases:
+  - name: db
+    engine: PG
+    production: false
