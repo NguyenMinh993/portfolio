@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from django.core.mail import EmailMessage
 from django.conf import settings
 from .forms import ContactForm
-import smtplib # Import smtplib to catch the specific error
+import os
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail, Attachment, FileContent, FileName, FileType, Disposition
+import base64
 
 def index(request):
     return render(request, 'portfolio/index.html')
@@ -22,31 +24,30 @@ def contact_form_submit(request):
 
             subject = f"New Contact: {source_page}"
             
-            email_message = EmailMessage(
-                subject,
-                f'From: {user_email}\n\n{message}',
-                settings.DEFAULT_FROM_EMAIL,
-                ['nguyenminh090903@gmail.com'],
-                reply_to=[user_email],
+            # Use SendGrid API instead of SMTP
+            message_obj = Mail(
+                from_email=os.environ.get('FROM_EMAIL', 'nguyenminh090903@gmail.com'),
+                to_emails='nguyenminh090903@gmail.com',
+                subject=subject,
+                html_content=f'<p><strong>From:</strong> {user_email}</p><p><strong>Message:</strong></p><p>{message}</p>'
             )
-
+            
+            # Add attachment if present
             if attachment:
-                email_message.attach(attachment.name, attachment.read(), attachment.content_type)
+                file_content = base64.b64encode(attachment.read()).decode()
+                attached_file = Attachment(
+                    FileContent(file_content),
+                    FileName(attachment.name),
+                    FileType(attachment.content_type),
+                    Disposition('attachment')
+                )
+                message_obj.attachment = attached_file
 
             try:
-                email_message.send()
+                sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+                response = sg.send(message_obj)
                 return JsonResponse({'success': True, 'message': 'Message sent successfully!'})
-            except smtplib.SMTPAuthenticationError as e:
-                # This is the specific error for bad username/password
-                import traceback
-                return JsonResponse({
-                    'success': False, 
-                    'message': 'SMTP Authentication Error', 
-                    'error': str(e),
-                    'traceback': traceback.format_exc()
-                })
             except Exception as e:
-                # Catch any other email-related errors
                 import traceback
                 return JsonResponse({
                     'success': False, 
