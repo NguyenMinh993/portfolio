@@ -32,6 +32,12 @@ DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 # Allow all hosts in production (Render will handle security)
 ALLOWED_HOSTS = ['*']
 
+# CSRF trusted origins for Railway
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.railway.app',
+    'https://*.up.railway.app',
+]
+
 
 # Application definition
 
