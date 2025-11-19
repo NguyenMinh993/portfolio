@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # Add WhiteNoise for static files
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -126,21 +127,23 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = []
 
-# Azure Storage Settings
-if not DEBUG:
+# WhiteNoise configuration for serving static files
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Azure Storage Settings (optional - only if you want to use Azure)
+if not DEBUG and os.environ.get('AZURE_ACCOUNT_NAME'):
     AZURE_STORAGE_ACCOUNT_NAME = os.environ.get('AZURE_ACCOUNT_NAME')
     AZURE_STORAGE_ACCOUNT_KEY = os.environ.get('AZURE_ACCOUNT_KEY')
     AZURE_CONTAINER_STATIC = os.environ.get('AZURE_CONTAINER_STATIC', 'static')
     AZURE_CONTAINER_MEDIA = os.environ.get('AZURE_CONTAINER_MEDIA', 'media')
 
-    STATICFILES_STORAGE = 'storages.backends.azure_storage.AzureStorage'
     DEFAULT_FILE_STORAGE = 'storages.backends.azure_storage.AzureStorage'
 
     AZURE_CUSTOM_DOMAIN = f'{AZURE_STORAGE_ACCOUNT_NAME}.blob.core.windows.net'
-    STATIC_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_CONTAINER_STATIC}/'
     MEDIA_URL = f'https://{AZURE_CUSTOM_DOMAIN}/{AZURE_CONTAINER_MEDIA}/'
 
     AZURE_URL_EXPIRATION_SECS = 3600 # Optional: URL expiration for private blobs
