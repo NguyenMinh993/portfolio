@@ -18,7 +18,7 @@ try:
     
     username = 'admin'
     email = 'nguyenminh090903@gmail.com'
-    password = 'Admin@123456'  # Change this!
+    password = os.environ.get('ADMIN_PASSWORD', 'ChangeThisPassword123!')  # Set ADMIN_PASSWORD in env
     
     if not User.objects.filter(username=username).exists():
         User.objects.create_superuser(username, email, password)

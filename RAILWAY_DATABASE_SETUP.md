@@ -35,12 +35,11 @@ Bạn cần setup:
 
 ## ☁️ BƯỚC 2: Setup Cloudinary Credentials
 
-### 2.1. Thông Tin Cloudinary Của Bạn
-```
-Cloud Name: dncau92ox
-API Key: 633184626668481
-API Secret: FejQgs_PoJkJtQYR5guL7D6WvfQ
-```
+### 2.1. Lấy Thông Tin Cloudinary
+1. Truy cập: https://cloudinary.com
+2. Login vào account của bạn
+3. Dashboard → Settings → Account
+4. Copy: Cloud Name, API Key, API Secret
 
 ### 2.2. Add Variables vào Railway
 
@@ -51,17 +50,17 @@ API Secret: FejQgs_PoJkJtQYR5guL7D6WvfQ
 ```
 CLOUDINARY_CLOUD_NAME
 ```
-Value: `dncau92ox`
+Value: `your-cloud-name`
 
 ```
 CLOUDINARY_API_KEY
 ```
-Value: `633184626668481`
+Value: `your-api-key`
 
 ```
 CLOUDINARY_API_SECRET
 ```
-Value: `FejQgs_PoJkJtQYR5guL7D6WvfQ`
+Value: `your-api-secret`
 
 4. **Railway sẽ tự động redeploy** sau khi add variables
 
@@ -76,9 +75,9 @@ Trong Railway → Django Service → Tab "Variables", bạn phải có:
 - ✅ `PORT` - Railway tự set
 
 ### Variables Bạn Cần Thêm:
-- ✅ `CLOUDINARY_CLOUD_NAME` = dncau92ox
-- ✅ `CLOUDINARY_API_KEY` = 633184626668481
-- ✅ `CLOUDINARY_API_SECRET` = FejQgs_PoJkJtQYR5guL7D6WvfQ
+- ✅ `CLOUDINARY_CLOUD_NAME` = your-cloud-name
+- ✅ `CLOUDINARY_API_KEY` = your-api-key
+- ✅ `CLOUDINARY_API_SECRET` = your-api-secret
 - ✅ `SECRET_KEY` = (nếu chưa có, thêm random string)
 - ✅ `DEBUG` = False
 - ✅ `SENDGRID_API_KEY` = (nếu có)
@@ -180,7 +179,7 @@ https://your-app.railway.app/admin
 - Phải thấy ảnh vừa upload trong folder `projects/`
 
 ### 7.2. Check Image URL
-- URL format: `https://res.cloudinary.com/dncau92ox/image/upload/...`
+- URL format: `https://res.cloudinary.com/your-cloud-name/image/upload/...`
 - Click vào URL → Ảnh phải hiển thị
 
 ---
