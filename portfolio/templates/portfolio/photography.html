@@ -355,14 +355,8 @@
         <h2 class="section-title">Gallery</h2>
         <div class="photo-grid">
             {% for photo in all_photos %}
-            <div class="photo-item" style="animation-delay: {{ forloop.counter0|add:1|floatformat:1|mul:0.1 }}s;">
-                <img src="{{ photo.thumbnail_url|default:photo.image_url }}" alt="{{ photo.title }}">
-                {% if photo.description %}
-                <div class="photo-overlay">
-                    <h3>{{ photo.title }}</h3>
-                    <p>{{ photo.description|truncatewords:15 }}</p>
-                </div>
-                {% endif %}
+            <div class="photo-item" style="animation-delay: 0.{{ forloop.counter }}s;">
+                <img src="{% if photo.thumbnail_url %}{{ photo.thumbnail_url }}{% else %}{{ photo.image_url }}{% endif %}" alt="{{ photo.title }}">
             </div>
             {% empty %}
             <div class="photo-item" style="animation-delay: 0.1s;">
