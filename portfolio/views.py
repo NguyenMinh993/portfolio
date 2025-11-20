@@ -30,13 +30,13 @@ def contact_form_submit(request):
             
             # Different images based on source page
             if 'photo' in source_page.lower():
-                hero_image = 'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=600&h=400&fit=crop'
+                hero_image = 'https://picsum.photos/600/400?random=1'
                 theme_color = '#e74c3c'
                 theme_gradient = 'linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)'
                 icon = '📸'
                 title = 'New Photography Inquiry'
             else:
-                hero_image = 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop'
+                hero_image = 'https://picsum.photos/600/400?random=2'
                 theme_color = '#667eea'
                 theme_gradient = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
                 icon = '💼'
