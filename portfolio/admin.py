@@ -22,7 +22,7 @@ class ProjectAdmin(admin.ModelAdmin):
         }),
         ('Image', {
             'fields': ('image_file', 'image_url'),
-            'description': 'Upload a new image or use existing URL'
+            'description': 'Upload image (will be stored in Cloudinary)'
         }),
         ('Display Settings', {
             'fields': ('order', 'is_featured')
@@ -61,7 +61,7 @@ class PhotoAdmin(admin.ModelAdmin):
         }),
         ('Image', {
             'fields': ('image_file', 'image_url', 'thumbnail_url'),
-            'description': 'Upload a new image or use existing URL'
+            'description': 'Upload image (will be stored in Cloudinary with auto thumbnail)'
         }),
         ('Display Settings', {
             'fields': ('order', 'is_featured')

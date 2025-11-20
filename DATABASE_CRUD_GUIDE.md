@@ -4,7 +4,7 @@
 
 Hệ thống bao gồm:
 - **PostgreSQL Database**: Lưu trữ dữ liệu (Railway)
-- **Azure Blob Storage**: Lưu trữ hình ảnh
+- **Cloudinary**: Lưu trữ hình ảnh (25GB free)
 - **Django Admin Panel**: Giao diện CRUD (có authentication)
 
 ## 🗄️ Models Đã Tạo
@@ -45,8 +45,9 @@ Copy `.env.example` thành `.env` và điền thông tin:
 SECRET_KEY=your-secret-key
 DEBUG=True
 DATABASE_URL=postgresql://localhost/portfolio
-AZURE_STORAGE_CONNECTION_STRING=your-azure-connection-string
-AZURE_STORAGE_CONTAINER_NAME=portfolio-images
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
 ```
 
 ### Bước 3: Setup Database
@@ -125,10 +126,11 @@ Hoặc trong admin panel:
 1. Chọn file ảnh trong admin form
 2. Click Save
 3. Django tự động:
-   - Upload ảnh lên Azure Blob Storage
+   - Upload ảnh lên Cloudinary
+   - Tự động optimize ảnh
    - Lấy public URL
    - Lưu URL vào database
-4. Ảnh có thể truy cập public qua URL
+4. Ảnh có thể truy cập public qua URL với CDN
 
 ### Supported Formats:
 - JPG/JPEG
@@ -149,16 +151,17 @@ Hoặc trong admin panel:
 2. Chọn "Database" → "PostgreSQL"
 3. Railway tự động tạo và set `DATABASE_URL`
 
-### Bước 2: Setup Azure Blob Storage
-Xem file `AZURE_SETUP.md` để setup Azure
+### Bước 2: Setup Cloudinary
+Xem file `CLOUDINARY_SETUP.md` để setup Cloudinary (5 phút)
 
 ### Bước 3: Set Environment Variables
 Railway Dashboard → Variables:
 ```
 SECRET_KEY=your-production-secret-key
 DEBUG=False
-AZURE_STORAGE_CONNECTION_STRING=your-azure-connection
-AZURE_STORAGE_CONTAINER_NAME=portfolio-images
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
 SENDGRID_API_KEY=your-sendgrid-key
 FROM_EMAIL=your-email@gmail.com
 ```
@@ -187,13 +190,13 @@ Truy cập: `https://your-app.railway.app/admin`
 python manage.py migrate
 ```
 
-### Lỗi "AZURE_STORAGE_CONNECTION_STRING not set"
-Kiểm tra environment variables đã set chưa
+### Lỗi "Cloudinary credentials not set"
+Kiểm tra environment variables đã set chưa (CLOUDINARY_CLOUD_NAME, API_KEY, API_SECRET)
 
 ### Lỗi upload ảnh
-- Kiểm tra Azure container có public access
-- Kiểm tra connection string đúng
+- Kiểm tra Cloudinary credentials đúng
 - Kiểm tra file size < 10MB
+- Check logs để xem error message
 
 ### Lỗi "Permission denied" trong admin
 - Đảm bảo user có staff status
@@ -264,7 +267,7 @@ Skill
 - Backup database thường xuyên
 - Dùng featured flag để highlight projects quan trọng
 - Order field để sắp xếp thứ tự hiển thị
-- Azure free tier: 5GB storage (đủ cho portfolio)
+- Cloudinary free tier: 25GB storage + auto optimize
 - PostgreSQL trên Railway: Free tier 500MB
 
 ## 📞 Support
@@ -272,4 +275,4 @@ Skill
 Nếu gặp vấn đề:
 1. Check logs: Railway Dashboard → Deployments → Logs
 2. Check database: Railway → PostgreSQL → Data
-3. Check Azure: Azure Portal → Storage Account → Containers
+3. Check Cloudinary: Cloudinary Dashboard → Media Library

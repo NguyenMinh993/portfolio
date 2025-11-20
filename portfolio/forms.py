@@ -7,7 +7,7 @@ class ProjectForm(forms.ModelForm):
     """Form for creating/editing projects with image upload"""
     image_file = forms.ImageField(
         required=False,
-        help_text="Upload image (will be stored in Azure Blob Storage)"
+        help_text="Upload image (will be stored in Cloudinary)"
     )
     
     class Meta:
@@ -41,7 +41,7 @@ class PhotoForm(forms.ModelForm):
     """Form for creating/editing photos with image upload"""
     image_file = forms.ImageField(
         required=False,
-        help_text="Upload photo (will be stored in Azure Blob Storage)"
+        help_text="Upload photo (will be stored in Cloudinary)"
     )
     
     class Meta:

@@ -5,6 +5,5 @@ python-dotenv
 gunicorn
 whitenoise
 sendgrid>=6.11.0
-azure-storage-blob==12.19.0
 cloudinary==1.36.0
 Pillow==10.2.0
