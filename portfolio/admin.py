@@ -21,13 +21,15 @@ class ProjectAdmin(admin.ModelAdmin):
             'fields': ('github_url', 'live_url')
         }),
         ('Image', {
-            'fields': ('image_file', 'image_url'),
-            'description': 'Upload image (will be stored in Cloudinary)'
+            'fields': ('image_file',),
+            'description': 'Upload image (will be automatically stored in Cloudinary)'
         }),
         ('Display Settings', {
             'fields': ('order', 'is_featured')
         }),
     )
+    
+    readonly_fields = ['image_preview']
     
     def image_preview(self, obj):
         if obj.image_url:
@@ -60,13 +62,15 @@ class PhotoAdmin(admin.ModelAdmin):
             'fields': ('title', 'description', 'category')
         }),
         ('Image', {
-            'fields': ('image_file', 'image_url', 'thumbnail_url'),
-            'description': 'Upload image (will be stored in Cloudinary with auto thumbnail)'
+            'fields': ('image_file',),
+            'description': 'Upload image (will be automatically stored in Cloudinary with thumbnail)'
         }),
         ('Display Settings', {
             'fields': ('order', 'is_featured')
         }),
     )
+    
+    readonly_fields = ['image_preview']
     
     def image_preview(self, obj):
         if obj.image_url:
