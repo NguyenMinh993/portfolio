@@ -3,6 +3,6 @@ builder = "NIXPACKS"
 
 [deploy]
 startCommand = "python manage.py collectstatic --noinput && python manage.py migrate && python create_superuser.py && gunicorn --bind 0.0.0.0:$PORT --workers 3 DjangoProject.wsgi:application"
-healthcheckPath = "/admin"
+healthcheckPath = "/health/"
 healthcheckTimeout = 300
 restartPolicyType = "ON_FAILURE"

@@ -1,11 +1,15 @@
 from django.shortcuts import render
-from django.http import JsonResponse
+from django.http import JsonResponse, HttpResponse
 from django.conf import settings
 from .forms import ContactForm
 import os
 from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, Attachment, FileContent, FileName, FileType, Disposition
 import base64
+
+def health_check(request):
+    """Simple health check endpoint"""
+    return HttpResponse("OK", status=200)
 
 def index(request):
     return render(request, 'portfolio/index.html')
