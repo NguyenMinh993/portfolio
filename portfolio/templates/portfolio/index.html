@@ -153,6 +153,21 @@
             animation: fadeInRight 1.5s ease;
         }
 
+        .profile-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid rgba(212, 175, 55, 0.5);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
         /* Animated Code Window */
         .code-window {
             width: 450px;
@@ -491,22 +506,11 @@
             </div>
         </div>
         <div class="hero-image">
-            <!-- Animated Code Window -->
-            <div class="code-window">
-                <div class="window-header">
-                    <div class="window-dot dot-red"></div>
-                    <div class="window-dot dot-yellow"></div>
-                    <div class="window-dot dot-green"></div>
-                </div>
-                <div class="code-content">
-                    <div class="code-line"><span class="code-keyword">const</span> <span class="code-function">developer</span> = {</div>
-                    <div class="code-line">  name: <span class="code-string">"Nguyen Van Minh"</span>,</div>
-                    <div class="code-line">  role: <span class="code-string">"Full Stack Developer"</span>,</div>
-                    <div class="code-line">  skills: [<span class="code-string">"NestJS"</span>, <span class="code-string">"Next.js"</span>, <span class="code-string">"Python"</span>],</div>
-                    <div class="code-line">  passion: <span class="code-string">"Building scalable apps"</span></div>
-                    <div class="code-line">};</div>
-                </div>
-            </div>
+            <!-- Profile Image - Replace with your actual image URL -->
+            <img src="https://ui-avatars.com/api/?name=Nguyen+Van+Minh&size=300&background=d4af37&color=1a1a1a&bold=true" 
+                 alt="Nguyen Van Minh" 
+                 class="profile-image"
+                 onerror="this.src='https://via.placeholder.com/300/d4af37/1a1a1a?text=NVM'">
         </div>
     </section>
     <!-- Highlights Section - Key Points for HR -->
