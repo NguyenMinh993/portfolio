@@ -91,3 +91,10 @@ class SkillForm(forms.ModelForm):
         widgets = {
             'proficiency': forms.NumberInput(attrs={'min': 0, 'max': 100}),
         }
+
+
+class ContactForm(forms.Form):
+    """Form for contact page"""
+    email = forms.EmailField(required=True)
+    message = forms.CharField(widget=forms.Textarea, required=True)
+    attachment = forms.FileField(required=False)
