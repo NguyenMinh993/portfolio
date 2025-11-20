@@ -15,7 +15,20 @@ def index(request):
     return render(request, 'portfolio/index.html')
 
 def photography(request):
-    return render(request, 'portfolio/photography.html')
+    from .models import Photo
+    
+    # Get photos from database
+    digital_photos = Photo.objects.filter(category='digital', is_featured=True).order_by('order', '-created_at')[:6]
+    film_photos = Photo.objects.filter(category='film', is_featured=True).order_by('order', '-created_at')[:6]
+    all_photos = Photo.objects.filter(is_featured=True).order_by('order', '-created_at')[:12]
+    
+    context = {
+        'digital_photos': digital_photos,
+        'film_photos': film_photos,
+        'all_photos': all_photos,
+    }
+    
+    return render(request, 'portfolio/photography.html', context)
 
 def contact_form_submit(request):
     if request.method == 'POST':
