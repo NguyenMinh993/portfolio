@@ -19,6 +19,11 @@ class ProjectForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'rows': 5}),
         }
     
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Make image_url not required if image_file is provided
+        self.fields['image_url'].required = False
+    
     def save(self, commit=True):
         instance = super().save(commit=False)
         
@@ -31,6 +36,8 @@ class ProjectForm(forms.ModelForm):
                 instance.image_url = image_url
             except Exception as e:
                 raise forms.ValidationError(f"Failed to upload image: {str(e)}")
+        elif not instance.image_url:
+            raise forms.ValidationError("Please upload an image or provide an image URL")
         
         if commit:
             instance.save()
@@ -54,6 +61,12 @@ class PhotoForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'rows': 3}),
         }
     
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Make image_url not required if image_file is provided
+        self.fields['image_url'].required = False
+        self.fields['thumbnail_url'].required = False
+    
     def save(self, commit=True):
         instance = super().save(commit=False)
         
@@ -67,6 +80,8 @@ class PhotoForm(forms.ModelForm):
                 instance.thumbnail_url = result['thumbnail_url']
             except Exception as e:
                 raise forms.ValidationError(f"Failed to upload image: {str(e)}")
+        elif not instance.image_url:
+            raise forms.ValidationError("Please upload an image or provide an image URL")
         
         if commit:
             instance.save()
