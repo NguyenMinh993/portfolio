@@ -322,13 +322,9 @@
         </div>
 
         <div class="photo-showcase">
-            {% for photo in digital_photos|slice:":3" %}
-            <img src="{{ photo.image_url }}" alt="{{ photo.title }}" class="showcase-image img-{{ forloop.counter }}">
-            {% empty %}
             <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=800&q=60" alt="Showcase Image 1" class="showcase-image img-1">
             <img src="https://images.unsplash.com/photo-1553877522-43269d4ea984?auto=format&fit=crop&w=800&q=60" alt="Showcase Image 2" class="showcase-image img-2">
             <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=60" alt="Showcase Image 3" class="showcase-image img-3">
-            {% endfor %}
         </div>
     </section>
 
@@ -340,13 +336,9 @@
         </div>
 
         <div class="photo-showcase">
-            {% for photo in film_photos|slice:":3" %}
-            <img src="{{ photo.image_url }}" alt="{{ photo.title }}" class="showcase-image img-{{ forloop.counter }} film-showcase-image">
-            {% empty %}
             <img src="https://images.unsplash.com/photo-1525130413817-d45c1d127c42?auto=format&fit=crop&w=900&q=60" alt="Showcase Image 4" class="showcase-image img-1 film-showcase-image">
             <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=800&q=60" alt="Showcase Image 5" class="showcase-image img-2 film-showcase-image">
             <img src="https://images.unsplash.com/photo-1522199755839-a2bacb67c546?auto=format&fit=crop&w=800&q=60" alt="Showcase Image 6" class="showcase-image img-3 film-showcase-image">
-            {% endfor %}
         </div>
     </section>
 
@@ -354,11 +346,6 @@
     <section class="gallery-section">
         <h2 class="section-title">Gallery</h2>
         <div class="photo-grid">
-            {% for photo in all_photos %}
-            <div class="photo-item" style="animation-delay: 0.{{ forloop.counter }}s;">
-                <img src="{% if photo.thumbnail_url %}{{ photo.thumbnail_url }}{% else %}{{ photo.image_url }}{% endif %}" alt="{{ photo.title }}">
-            </div>
-            {% empty %}
             <div class="photo-item" style="animation-delay: 0.1s;">
                 <img src="https://images.unsplash.com/photo-1545239351-1141bd82e8a6?auto=format&fit=crop&w=800&q=60" alt="Photograph 1">
             </div>
@@ -368,7 +355,15 @@
             <div class="photo-item" style="animation-delay: 0.3s;">
                 <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?auto=format&fit=crop&w=800&q=60" alt="Photograph 3">
             </div>
-            {% endfor %}
+            <div class="photo-item" style="animation-delay: 0.4s;">
+                <img src="https://images.unsplash.com/photo-1525130413817-d45c1d127c42?auto=format&fit=crop&w=900&q=60" alt="Photograph 4">
+            </div>
+            <div class="photo-item" style="animation-delay: 0.5s;">
+                <img src="https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?auto=format&fit=crop&w=800&q=60" alt="Photograph 5">
+            </div>
+            <div class="photo-item" style="animation-delay: 0.6s;">
+                <img src="https://images.unsplash.com/photo-1522199755839-a2bacb67c546?auto=format&fit=crop&w=800&q=60" alt="Photograph 6">
+            </div>
         </div>
     </section>
 

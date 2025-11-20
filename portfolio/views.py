@@ -15,29 +15,7 @@ def index(request):
     return render(request, 'portfolio/index.html')
 
 def photography(request):
-    try:
-        from .models import Photo
-        
-        # Get photos from database
-        digital_photos = Photo.objects.filter(category='digital', is_featured=True).order_by('order', '-created_at')[:6]
-        film_photos = Photo.objects.filter(category='film', is_featured=True).order_by('order', '-created_at')[:6]
-        all_photos = Photo.objects.filter(is_featured=True).order_by('order', '-created_at')[:12]
-        
-        context = {
-            'digital_photos': digital_photos,
-            'film_photos': film_photos,
-            'all_photos': all_photos,
-        }
-    except Exception as e:
-        # If database error, return empty lists
-        print(f"Error loading photos: {e}")
-        context = {
-            'digital_photos': [],
-            'film_photos': [],
-            'all_photos': [],
-        }
-    
-    return render(request, 'portfolio/photography.html', context)
+    return render(request, 'portfolio/photography.html')
 
 def contact_form_submit(request):
     if request.method == 'POST':
