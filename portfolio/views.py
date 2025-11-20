@@ -28,86 +28,115 @@ def contact_form_submit(request):
             import datetime
             current_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             
+            # Different images based on source page
+            if 'photo' in source_page.lower():
+                hero_image = 'https://images.unsplash.com/photo-1452587925148-ce544e77e70d?w=600&h=400&fit=crop'
+                theme_color = '#e74c3c'
+                theme_gradient = 'linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)'
+                icon = '📸'
+                title = 'New Photography Inquiry'
+            else:
+                hero_image = 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop'
+                theme_color = '#667eea'
+                theme_gradient = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
+                icon = '💼'
+                title = 'New Job/Dev Inquiry'
+            
             html_content = f'''
             <!DOCTYPE html>
             <html>
             <head>
                 <meta charset="UTF-8">
                 <style>
-                    body {{ font-family: 'Segoe UI', Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 20px; }}
-                    .container {{ max-width: 650px; margin: 0 auto; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 32px rgba(0,0,0,0.12); }}
-                    .header {{ background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 50px 40px; text-align: center; position: relative; }}
-                    .header::before {{ content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="40" fill="rgba(255,255,255,0.1)"/></svg>'); opacity: 0.1; }}
-                    .header h1 {{ color: white; margin: 0; font-size: 32px; font-weight: 700; position: relative; }}
-                    .header p {{ color: rgba(255,255,255,0.95); margin: 15px 0 0; font-size: 16px; position: relative; }}
-                    .badge {{ display: inline-block; background: rgba(255,255,255,0.25); color: white; padding: 8px 16px; border-radius: 25px; font-size: 13px; font-weight: 600; margin-top: 15px; backdrop-filter: blur(10px); }}
-                    .content {{ padding: 45px 40px; }}
-                    .info-grid {{ display: table; width: 100%; margin-bottom: 30px; }}
-                    .info-row {{ display: table-row; }}
-                    .info-label {{ display: table-cell; color: #667eea; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; padding: 12px 20px 12px 0; vertical-align: top; width: 140px; }}
-                    .info-value {{ display: table-cell; color: #333; font-size: 16px; padding: 12px 0; }}
-                    .field {{ margin-bottom: 30px; }}
-                    .label {{ color: #667eea; font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.2px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }}
-                    .value {{ color: #333; font-size: 16px; line-height: 1.6; background: #f8f9fa; padding: 18px 20px; border-radius: 10px; border-left: 5px solid #667eea; }}
-                    .message-box {{ background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); padding: 25px; border-radius: 12px; border-left: 5px solid #764ba2; white-space: pre-wrap; font-size: 16px; line-height: 1.8; color: #2c3e50; min-height: 80px; }}
-                    .stats {{ display: flex; justify-content: space-around; background: #f8f9fa; padding: 25px; border-radius: 12px; margin-top: 30px; }}
-                    .stat-item {{ text-align: center; }}
-                    .stat-value {{ font-size: 24px; font-weight: 700; color: #667eea; }}
-                    .stat-label {{ font-size: 12px; color: #666; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }}
-                    .footer {{ background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%); padding: 30px 40px; text-align: center; }}
-                    .footer p {{ color: rgba(255,255,255,0.8); font-size: 14px; margin: 8px 0; }}
-                    .footer a {{ color: #667eea; text-decoration: none; font-weight: 600; }}
-                    .footer a:hover {{ color: #764ba2; }}
-                    .action-btn {{ display: inline-block; background: #667eea; color: white; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: 600; margin-top: 15px; }}
+                    body {{ font-family: 'Segoe UI', Arial, sans-serif; background: #fef6e4; margin: 0; padding: 20px; }}
+                    .container {{ max-width: 600px; margin: 0 auto; background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.15); border: 3px solid #f3d250; }}
+                    .top-banner {{ background: {theme_gradient}; padding: 20px; text-align: center; }}
+                    .top-banner p {{ color: white; margin: 0; font-size: 14px; font-weight: 600; }}
+                    .header {{ background: linear-gradient(180deg, #fff 0%, #f8f9fa 100%); padding: 40px 30px 20px; text-align: center; }}
+                    .icon-badge {{ font-size: 48px; margin-bottom: 15px; }}
+                    .header h1 {{ color: #2c3e50; margin: 0; font-size: 36px; font-weight: 800; line-height: 1.2; }}
+                    .header p {{ color: #7f8c8d; margin: 12px 0 0; font-size: 16px; }}
+                    .hero-image {{ width: 100%; height: 300px; object-fit: cover; display: block; }}
+                    .content {{ padding: 35px 30px; }}
+                    .greeting {{ background: {theme_gradient}; color: white; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 30px; }}
+                    .greeting h2 {{ margin: 0 0 8px; font-size: 22px; }}
+                    .greeting p {{ margin: 0; font-size: 14px; opacity: 0.95; }}
+                    .info-box {{ background: #f8f9fa; border-radius: 12px; padding: 20px; margin-bottom: 25px; border-left: 5px solid {theme_color}; }}
+                    .info-row {{ display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #e9ecef; }}
+                    .info-row:last-child {{ border-bottom: none; }}
+                    .info-label {{ font-weight: 700; color: #2c3e50; font-size: 14px; }}
+                    .info-value {{ color: #7f8c8d; font-size: 14px; text-align: right; }}
+                    .message-section {{ margin: 30px 0; }}
+                    .message-label {{ font-size: 14px; font-weight: 700; color: {theme_color}; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }}
+                    .message-box {{ background: linear-gradient(135deg, #fff5e6 0%, #ffe6cc 100%); padding: 25px; border-radius: 12px; border: 2px dashed {theme_color}; white-space: pre-wrap; font-size: 16px; line-height: 1.8; color: #2c3e50; min-height: 100px; }}
+                    .cta-section {{ text-align: center; margin: 35px 0; padding: 30px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; }}
+                    .cta-button {{ display: inline-block; background: {theme_gradient}; color: white; padding: 15px 40px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }}
+                    .footer {{ background: #2c3e50; padding: 30px; text-align: center; }}
+                    .footer-logo {{ color: white; font-size: 24px; font-weight: 800; margin-bottom: 15px; }}
+                    .footer-links {{ margin: 20px 0; }}
+                    .footer-links a {{ color: {theme_color}; text-decoration: none; margin: 0 15px; font-size: 14px; font-weight: 600; }}
+                    .footer p {{ color: rgba(255,255,255,0.7); font-size: 13px; margin: 8px 0; }}
+                    .social-icons {{ margin: 20px 0; }}
+                    .social-icons span {{ display: inline-block; margin: 0 8px; font-size: 20px; }}
                 </style>
             </head>
             <body>
                 <div class="container">
-                    <div class="header">
-                        <h1>📬 New Contact Message</h1>
-                        <p>You have received a new message from your portfolio website</p>
-                        <span class="badge">🏷️ {source_page}</span>
+                    <div class="top-banner">
+                        <p>🎉 Celebrating you with something special! 🎉</p>
                     </div>
+                    <div class="header">
+                        <div class="icon-badge">{icon}</div>
+                        <h1>{title}</h1>
+                        <p>You have a new message waiting for you!</p>
+                    </div>
+                    <img src="{hero_image}" alt="Hero" class="hero-image">
                     <div class="content">
-                        <div class="info-grid">
+                        <div class="greeting">
+                            <h2>Hello, Nguyen Van Minh! 👋</h2>
+                            <p>Someone reached out to you from your portfolio</p>
+                        </div>
+                        
+                        <div class="info-box">
                             <div class="info-row">
-                                <div class="info-label">📧 EMAIL</div>
-                                <div class="info-value"><strong>{user_email}</strong></div>
+                                <span class="info-label">📧 From</span>
+                                <span class="info-value">{user_email}</span>
                             </div>
                             <div class="info-row">
-                                <div class="info-label">🕐 TIME</div>
-                                <div class="info-value">{current_time}</div>
+                                <span class="info-label">🕐 Time</span>
+                                <span class="info-value">{current_time}</span>
                             </div>
                             <div class="info-row">
-                                <div class="info-label">📍 SOURCE</div>
-                                <div class="info-value">{source_page}</div>
+                                <span class="info-label">📍 Source</span>
+                                <span class="info-value">{source_page}</span>
                             </div>
                         </div>
                         
-                        <div class="field">
-                            <div class="label">💬 MESSAGE CONTENT</div>
+                        <div class="message-section">
+                            <div class="message-label">💬 Message Content</div>
                             <div class="message-box">{message}</div>
                         </div>
                         
-                        <div class="stats">
-                            <div class="stat-item">
-                                <div class="stat-value">📨</div>
-                                <div class="stat-label">New Message</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-value">✅</div>
-                                <div class="stat-label">Delivered</div>
-                            </div>
-                            <div class="stat-item">
-                                <div class="stat-value">🚀</div>
-                                <div class="stat-label">Action Required</div>
-                            </div>
+                        <div class="cta-section">
+                            <p style="margin: 0 0 15px; color: #7f8c8d; font-size: 14px;">Ready to respond?</p>
+                            <a href="mailto:{user_email}" class="cta-button">Reply Now →</a>
                         </div>
                     </div>
                     <div class="footer">
+                        <div class="footer-logo">Nguyen Van Minh</div>
+                        <div class="footer-links">
+                            <a href="https://nguyenminh993.up.railway.app">Portfolio</a>
+                            <a href="https://github.com/NguyenMinh993">GitHub</a>
+                            <a href="https://www.linkedin.com/in/văn-minh-nguyễn">LinkedIn</a>
+                        </div>
+                        <div class="social-icons">
+                            <span>📘</span>
+                            <span>📷</span>
+                            <span>🐦</span>
+                            <span>💼</span>
+                        </div>
                         <p>📧 Sent via Portfolio Contact Form</p>
-                        <p>🌐 <a href="https://nguyenminh993.up.railway.app">nguyenminh993.up.railway.app</a></p>
-                        <p style="font-size: 12px; color: rgba(255,255,255,0.6); margin-top: 15px;">
+                        <p style="font-size: 12px; color: rgba(255,255,255,0.5); margin-top: 15px;">
                             © 2025 Nguyen Van Minh | Full Stack Developer
                         </p>
                     </div>
