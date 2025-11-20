@@ -6,8 +6,8 @@ from .cloudinary_storage import get_cloudinary_storage
 class ProjectForm(forms.ModelForm):
     """Form for creating/editing projects with image upload"""
     image_file = forms.ImageField(
-        required=True,
-        help_text="Upload image (will be stored in Cloudinary)"
+        required=False,
+        help_text="Upload new image (will be stored in Cloudinary)"
     )
     
     class Meta:
@@ -18,10 +18,20 @@ class ProjectForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'rows': 5}),
         }
     
+    def clean(self):
+        cleaned_data = super().clean()
+        image_file = cleaned_data.get('image_file')
+        
+        # For new records, require image
+        if not self.instance.pk and not image_file:
+            raise forms.ValidationError("Please upload an image for new project")
+        
+        return cleaned_data
+    
     def save(self, commit=True):
         instance = super().save(commit=False)
         
-        # Upload image to Cloudinary
+        # Upload image to Cloudinary if provided
         image_file = self.cleaned_data.get('image_file')
         if image_file:
             try:
@@ -42,8 +52,8 @@ class ProjectForm(forms.ModelForm):
 class PhotoForm(forms.ModelForm):
     """Form for creating/editing photos with image upload"""
     image_file = forms.ImageField(
-        required=True,
-        help_text="Upload photo (will be stored in Cloudinary)"
+        required=False,
+        help_text="Upload new photo (will be stored in Cloudinary)"
     )
     
     class Meta:
@@ -53,10 +63,20 @@ class PhotoForm(forms.ModelForm):
             'description': forms.Textarea(attrs={'rows': 3}),
         }
     
+    def clean(self):
+        cleaned_data = super().clean()
+        image_file = cleaned_data.get('image_file')
+        
+        # For new records, require image
+        if not self.instance.pk and not image_file:
+            raise forms.ValidationError("Please upload an image for new photo")
+        
+        return cleaned_data
+    
     def save(self, commit=True):
         instance = super().save(commit=False)
         
-        # Upload image to Cloudinary
+        # Upload image to Cloudinary if provided
         image_file = self.cleaned_data.get('image_file')
         if image_file:
             try:
