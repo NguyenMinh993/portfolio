@@ -11,20 +11,26 @@ from django.conf import settings
 class CloudinaryStorage:
     def __init__(self):
         # Configure Cloudinary
+        cloud_name = os.environ.get('CLOUDINARY_CLOUD_NAME')
+        api_key = os.environ.get('CLOUDINARY_API_KEY')
+        api_secret = os.environ.get('CLOUDINARY_API_SECRET')
+        
+        # Validate configuration
+        if not all([cloud_name, api_key, api_secret]):
+            print("⚠️  Warning: Cloudinary credentials not set")
+            print(f"CLOUDINARY_CLOUD_NAME: {'✓' if cloud_name else '✗'}")
+            print(f"CLOUDINARY_API_KEY: {'✓' if api_key else '✗'}")
+            print(f"CLOUDINARY_API_SECRET: {'✓' if api_secret else '✗'}")
+            raise ValueError("Cloudinary credentials not set in environment variables")
+        
         cloudinary.config(
-            cloud_name=os.environ.get('CLOUDINARY_CLOUD_NAME'),
-            api_key=os.environ.get('CLOUDINARY_API_KEY'),
-            api_secret=os.environ.get('CLOUDINARY_API_SECRET'),
+            cloud_name=cloud_name,
+            api_key=api_key,
+            api_secret=api_secret,
             secure=True
         )
         
-        # Validate configuration
-        if not all([
-            os.environ.get('CLOUDINARY_CLOUD_NAME'),
-            os.environ.get('CLOUDINARY_API_KEY'),
-            os.environ.get('CLOUDINARY_API_SECRET')
-        ]):
-            raise ValueError("Cloudinary credentials not set in environment variables")
+        print(f"✅ Cloudinary configured: {cloud_name}")
     
     def upload_image(self, file, folder='portfolio'):
         """
