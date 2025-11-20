@@ -1,6 +1,6 @@
 from django import forms
 from .models import Project, Photo, Experience, Skill
-from .azure_storage import get_azure_storage
+from .cloudinary_storage import get_cloudinary_storage
 
 
 class ProjectForm(forms.ModelForm):
@@ -22,12 +22,12 @@ class ProjectForm(forms.ModelForm):
     def save(self, commit=True):
         instance = super().save(commit=False)
         
-        # Upload image to Azure if provided
+        # Upload image to Cloudinary if provided
         image_file = self.cleaned_data.get('image_file')
         if image_file:
             try:
-                azure_storage = get_azure_storage()
-                image_url = azure_storage.upload_image(image_file)
+                cloudinary_storage = get_cloudinary_storage()
+                image_url = cloudinary_storage.upload_image(image_file, folder='projects')
                 instance.image_url = image_url
             except Exception as e:
                 raise forms.ValidationError(f"Failed to upload image: {str(e)}")
@@ -57,14 +57,14 @@ class PhotoForm(forms.ModelForm):
     def save(self, commit=True):
         instance = super().save(commit=False)
         
-        # Upload image to Azure if provided
+        # Upload image to Cloudinary if provided
         image_file = self.cleaned_data.get('image_file')
         if image_file:
             try:
-                azure_storage = get_azure_storage()
-                image_url = azure_storage.upload_image(image_file)
-                instance.image_url = image_url
-                # You can also generate thumbnail here if needed
+                cloudinary_storage = get_cloudinary_storage()
+                result = cloudinary_storage.upload_photo(image_file, folder='photos')
+                instance.image_url = result['image_url']
+                instance.thumbnail_url = result['thumbnail_url']
             except Exception as e:
                 raise forms.ValidationError(f"Failed to upload image: {str(e)}")
         
