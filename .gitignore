@@ -16,3 +16,13 @@ staticfiles/
 # IDE
 .idea/
 *.swp
+
+# Images - Protect all images from being pushed to GitHub
+portfolio/Image/
+portfolio/static/portfolio/images/
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+*.svg
