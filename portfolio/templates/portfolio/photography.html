@@ -187,48 +187,41 @@
         }
 
         /* Desktop showcase styles - only apply on screens wider than 768px */
-        /* Desktop Grid Layout - 5 images in a row */
+        /* Desktop Stacked Layout with Animation */
         @media (min-width: 769px) {
             .photo-showcase {
-                width: 100%;
-                max-width: 1200px;
-                height: auto;
-                padding: 0;
-                margin: 0 auto;
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 400px;
             }
             
             .showcase-container {
-                display: grid;
-                grid-template-columns: repeat(5, 1fr);
-                gap: 20px;
+                position: relative;
                 width: 100%;
-                height: auto;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
             }
 
             .showcase-image {
-                position: relative !important;
-                width: 100%;
-                height: 250px;
+                position: absolute;
+                width: 320px;
+                height: 240px;
                 object-fit: cover;
                 object-position: center;
                 border-radius: 12px;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
                 border: 2px solid rgba(255, 255, 255, 0.1);
                 background: #1a1a1a;
-                transition: all 0.3s ease;
-                transform: none !important;
-                animation: none !important;
+                transition: all 1s cubic-bezier(0.4, 0, 0.2, 1);
             }
 
             .showcase-image:hover {
-                transform: translateY(-10px) scale(1.05) !important;
-                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
-                z-index: 10;
-            }
-
-            .img-1, .img-2, .img-3, .img-4, .img-5 {
-                display: block !important;
-                position: relative !important;
+                transform: scale(1.05) !important;
+                z-index: 100 !important;
             }
 
             .showcase-dots {
@@ -956,6 +949,55 @@
         if (window.innerWidth <= 768) {
             initCarousel('photo-showcase');
             initCarousel('film-showcase');
+        }
+        
+        // Desktop: Animate stacked images - continuously change positions
+        function initDesktopAnimation(showcaseId) {
+            if (window.innerWidth <= 768) return;
+            
+            const showcase = document.getElementById(showcaseId);
+            if (!showcase) return;
+            
+            const images = Array.from(showcase.querySelectorAll('.showcase-image'));
+            
+            // Define 5 different positions
+            const positions = [
+                { transform: 'rotate(-12deg) translate(-50%, -20%)', zIndex: 3 },
+                { transform: 'rotate(-5deg) translate(-20%, 0)', zIndex: 4 },
+                { transform: 'rotate(2deg) translate(0, 5%)', zIndex: 5 },
+                { transform: 'rotate(8deg) translate(25%, -5%)', zIndex: 4 },
+                { transform: 'rotate(15deg) translate(50%, 15%)', zIndex: 3 }
+            ];
+            
+            let currentPositions = [0, 1, 2, 3, 4]; // Track which image is at which position
+            
+            function rotatePositions() {
+                // Shift positions: last becomes first
+                currentPositions.unshift(currentPositions.pop());
+                
+                // Apply new positions
+                images.forEach((img, index) => {
+                    const pos = positions[currentPositions[index]];
+                    img.style.transform = pos.transform;
+                    img.style.zIndex = pos.zIndex;
+                });
+            }
+            
+            // Initial positions
+            images.forEach((img, index) => {
+                const pos = positions[index];
+                img.style.transform = pos.transform;
+                img.style.zIndex = pos.zIndex;
+            });
+            
+            // Rotate every 3 seconds
+            setInterval(rotatePositions, 3000);
+        }
+        
+        // Init desktop animation for both showcases
+        if (window.innerWidth > 768) {
+            initDesktopAnimation('photo-showcase');
+            initDesktopAnimation('film-showcase');
         }
 
         // Mobile Menu Toggle
