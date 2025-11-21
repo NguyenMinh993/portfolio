@@ -34,15 +34,13 @@ def contact_form_submit(request):
             import datetime
             current_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             
-            # Different images based on source page
+            # Different themes based on source page
             if 'photo' in source_page.lower():
-                hero_image = 'https://picsum.photos/600/400?random=1'
                 theme_color = '#e74c3c'
                 theme_gradient = 'linear-gradient(135deg, #e74c3c 0%, #c0392b 100%)'
                 icon = '📸'
                 title = 'New Photography Inquiry'
             else:
-                hero_image = 'https://picsum.photos/600/400?random=2'
                 theme_color = '#667eea'
                 theme_gradient = 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)'
                 icon = '💼'
@@ -58,11 +56,10 @@ def contact_form_submit(request):
                     .container {{ max-width: 600px; margin: 0 auto; background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.15); border: 3px solid #f3d250; }}
                     .top-banner {{ background: {theme_gradient}; padding: 20px; text-align: center; }}
                     .top-banner p {{ color: white; margin: 0; font-size: 14px; font-weight: 600; }}
-                    .header {{ background: linear-gradient(180deg, #fff 0%, #f8f9fa 100%); padding: 40px 30px 20px; text-align: center; }}
+                    .header {{ background: linear-gradient(180deg, #fff 0%, #f8f9fa 100%); padding: 40px 30px 30px; text-align: center; }}
                     .icon-badge {{ font-size: 48px; margin-bottom: 15px; }}
                     .header h1 {{ color: #2c3e50; margin: 0; font-size: 36px; font-weight: 800; line-height: 1.2; }}
                     .header p {{ color: #7f8c8d; margin: 12px 0 0; font-size: 16px; }}
-                    .hero-image {{ width: 100%; height: 300px; object-fit: cover; display: block; }}
                     .content {{ padding: 35px 30px; }}
                     .greeting {{ background: {theme_gradient}; color: white; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 30px; }}
                     .greeting h2 {{ margin: 0 0 8px; font-size: 22px; }}
@@ -96,7 +93,6 @@ def contact_form_submit(request):
                         <h1>{title}</h1>
                         <p>You have a new message waiting for you!</p>
                     </div>
-                    <img src="{hero_image}" alt="Hero" class="hero-image">
                     <div class="content">
                         <div class="greeting">
                             <h2>Hello, Nguyen Van Minh! 👋</h2>
