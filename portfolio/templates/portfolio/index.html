@@ -42,11 +42,32 @@
         }
 
         .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+        
+        .logo-img {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            object-fit: cover;
+            filter: grayscale(100%) contrast(1.2);
+            border: 2px solid #d4af37;
+            transition: all 0.3s ease;
+        }
+        
+        .logo:hover .logo-img {
+            filter: grayscale(0%) contrast(1);
+            transform: scale(1.05);
+        }
+        
+        .logo-text {
             font-size: 24px;
             font-weight: 700;
             letter-spacing: -0.5px;
             color: #d4af37;
-            text-decoration: none;
         }
 
         .nav-links {
@@ -478,7 +499,10 @@
 <body>
     <!-- Navigation -->
     <nav>
-        <a href="{% url 'index' %}" class="logo">Nguyen Van Minh</a>
+        <a href="{% url 'index' %}" class="logo">
+            <img src="{% static 'portfolio/images/gen-h-13.jpg' %}" alt="Logo" class="logo-img">
+            <span class="logo-text">Nguyen Van Minh</span>
+        </a>
         <ul class="nav-links">
             <li><a href="#profile">Profile</a></li>
             <li><a href="#experience">Experience</a></li>
