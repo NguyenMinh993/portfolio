@@ -5,7 +5,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from .forms import ContactForm
 import os
 from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail, Attachment, FileContent, FileName, FileType, Disposition, ReplyTo
+from sendgrid.helpers.mail import Mail, Attachment, FileContent, FileName, FileType, Disposition, ReplyTo, Category
 import base64
 
 def health_check(request):
@@ -176,12 +176,9 @@ Reply to: {user_email}
             # Set reply-to to user's email
             message_obj.reply_to = ReplyTo(user_email)
             
-            # Add categories and custom args for tracking
-            message_obj.category = ['portfolio-contact', source_page.lower().replace(' ', '-')]
-            message_obj.custom_arg = {
-                'source': source_page,
-                'user_email': user_email
-            }
+            # Add categories for tracking (must use Category objects)
+            message_obj.add_category(Category('portfolio-contact'))
+            message_obj.add_category(Category(source_page.lower().replace(' ', '-')))
             
             # Add attachment if present
             if attachment:
@@ -195,14 +192,32 @@ Reply to: {user_email}
                 message_obj.attachment = attached_file
 
             try:
-                sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-                response = sg.send(message_obj)
+                sendgrid_key = os.environ.get('SENDGRID_API_KEY')
+                if sendgrid_key:
+                    # Try SendGrid first
+                    sg = SendGridAPIClient(sendgrid_key)
+                    response = sg.send(message_obj)
+                else:
+                    # Fallback to Django email
+                    from django.core.mail import EmailMultiAlternatives
+                    email = EmailMultiAlternatives(
+                        subject=subject,
+                        body=plain_text,
+                        from_email=settings.DEFAULT_FROM_EMAIL,
+                        to=['nguyenminh090903@gmail.com'],
+                        reply_to=[user_email]
+                    )
+                    email.attach_alternative(html_content, "text/html")
+                    if attachment:
+                        email.attach(attachment.name, attachment.read(), attachment.content_type)
+                    email.send()
+                
                 return JsonResponse({'success': True, 'message': 'Message sent successfully!'})
             except Exception as e:
                 import traceback
                 return JsonResponse({
                     'success': False, 
-                    'message': 'Email Error', 
+                    'message': 'Failed to send email. Please try again later.', 
                     'error': str(e),
                     'error_type': type(e).__name__,
                     'traceback': traceback.format_exc()
