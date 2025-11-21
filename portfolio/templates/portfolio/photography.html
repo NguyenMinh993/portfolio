@@ -187,42 +187,43 @@
         }
 
         /* Desktop showcase styles - only apply on screens wider than 768px */
-        /* Desktop Carousel - Same as mobile but larger */
+        /* Desktop Grid Layout - 5 images in a row */
         @media (min-width: 769px) {
             .photo-showcase {
-                width: 600px;
-                height: 450px;
-                padding-bottom: 0;
+                width: 100%;
+                max-width: 1200px;
+                height: auto;
+                padding: 0;
                 margin: 0 auto;
-                border-radius: 20px;
             }
             
             .showcase-container {
-                display: flex;
+                display: grid;
+                grid-template-columns: repeat(5, 1fr);
+                gap: 20px;
                 width: 100%;
-                height: 100%;
-                transition: transform 0.5s ease-in-out;
-                position: relative;
+                height: auto;
             }
 
             .showcase-image {
                 position: relative !important;
-                min-width: 100%;
                 width: 100%;
-                height: 100%;
-                flex-shrink: 0;
+                height: 250px;
                 object-fit: cover;
                 object-position: center;
-                border-radius: 20px;
-                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+                border-radius: 12px;
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
                 border: 2px solid rgba(255, 255, 255, 0.1);
                 background: #1a1a1a;
+                transition: all 0.3s ease;
                 transform: none !important;
                 animation: none !important;
             }
 
             .showcase-image:hover {
-                transform: scale(1.02) !important;
+                transform: translateY(-10px) scale(1.05) !important;
+                box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+                z-index: 10;
             }
 
             .img-1, .img-2, .img-3, .img-4, .img-5 {
@@ -231,29 +232,7 @@
             }
 
             .showcase-dots {
-                display: flex;
-                position: absolute;
-                bottom: 20px;
-                left: 50%;
-                transform: translateX(-50%);
-                gap: 12px;
-                z-index: 100;
-            }
-            
-            .dot {
-                width: 12px;
-                height: 12px;
-                border-radius: 50%;
-                background: rgba(255, 255, 255, 0.6);
-                cursor: pointer;
-                transition: all 0.3s;
-                border: 2px solid rgba(0, 0, 0, 0.3);
-            }
-            
-            .dot.active {
-                width: 35px;
-                border-radius: 6px;
-                background: #d4af37;
+                display: none;
             }
         }
         
@@ -977,55 +956,6 @@
         if (window.innerWidth <= 768) {
             initCarousel('photo-showcase');
             initCarousel('film-showcase');
-        }
-        
-        // Desktop: Shuffle images positions every 3 seconds
-        function initDesktopShuffle(showcaseId) {
-            if (window.innerWidth <= 768) return;
-            
-            const showcase = document.getElementById(showcaseId);
-            if (!showcase) return;
-            
-            const images = Array.from(showcase.querySelectorAll('.showcase-image'));
-            
-            // Store original transforms
-            const originalTransforms = images.map(img => {
-                const style = window.getComputedStyle(img);
-                return {
-                    transform: img.style.transform || style.transform,
-                    zIndex: img.style.zIndex || style.zIndex
-                };
-            });
-            
-            function shufflePositions() {
-                // Get current transforms
-                const transforms = images.map(img => ({
-                    transform: img.style.transform,
-                    zIndex: img.style.zIndex
-                }));
-                
-                // Shuffle array
-                for (let i = transforms.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [transforms[i], transforms[j]] = [transforms[j], transforms[i]];
-                }
-                
-                // Apply shuffled transforms with smooth transition
-                images.forEach((img, index) => {
-                    img.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
-                    img.style.transform = transforms[index].transform;
-                    img.style.zIndex = transforms[index].zIndex;
-                });
-            }
-            
-            // Shuffle every 3 seconds
-            setInterval(shufflePositions, 3000);
-        }
-        
-        // Init desktop shuffle for both showcases
-        if (window.innerWidth > 768) {
-            initDesktopShuffle('photo-showcase');
-            initDesktopShuffle('film-showcase');
         }
 
         // Mobile Menu Toggle
