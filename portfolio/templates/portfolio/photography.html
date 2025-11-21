@@ -525,6 +525,7 @@
             }
             
             .showcase-image {
+                position: relative !important;
                 min-width: 100%;
                 width: 100%;
                 height: 100%;
@@ -535,6 +536,8 @@
                 animation: none !important;
                 border-radius: 0;
                 display: block;
+                box-shadow: none;
+                border: none;
             }
             
             .img-1, .img-2, .img-3, .img-4, .img-5 {
@@ -648,12 +651,14 @@
                 <img src="{% static 'portfolio/images/gen-h-22.jpg' %}" alt="Photography 2" class="showcase-image img-2">
                 <img src="{% static 'portfolio/images/gen-h-23.jpg' %}" alt="Photography 3" class="showcase-image img-3">
                 <img src="{% static 'portfolio/images/gen-h-15.jpg' %}" alt="Photography 4" class="showcase-image img-4">
+                <img src="{% static 'portfolio/images/gen-h-19.jpg' %}" alt="Photography 5" class="showcase-image img-5">
             </div>
             <div class="showcase-dots">
                 <span class="dot active" data-index="0"></span>
                 <span class="dot" data-index="1"></span>
                 <span class="dot" data-index="2"></span>
                 <span class="dot" data-index="3"></span>
+                <span class="dot" data-index="4"></span>
             </div>
         </div>
     </section>
@@ -667,9 +672,9 @@
 
         <div class="photo-showcase film-showcase" id="film-showcase">
             <div class="showcase-container">
-                <img src="{% static 'portfolio/images/gen-h-film.jpg' %}" alt="Film 1" class="showcase-image img-1 film-showcase-image">
-                <img src="{% static 'portfolio/images/gen-h-film4.jpg' %}" alt="Film 2" class="showcase-image img-2 film-showcase-image">
-                <img src="{% static 'portfolio/images/gen-h-film3.jpg' %}" alt="Film 3" class="showcase-image img-3 film-showcase-image">
+                <img src="{% static 'portfolio/images/gen-h-film1.jpg' %}" alt="Film 1" class="showcase-image img-1 film-showcase-image">
+                <img src="{% static 'portfolio/images/gen-h-film3.jpg' %}" alt="Film 2" class="showcase-image img-2 film-showcase-image">
+                <img src="{% static 'portfolio/images/gen-h-film4.jpg' %}" alt="Film 3" class="showcase-image img-3 film-showcase-image">
                 <img src="{% static 'portfolio/images/gen-h-film5.jpg' %}" alt="Film 4" class="showcase-image img-4 film-showcase-image">
                 <img src="{% static 'portfolio/images/gen-h-film6.jpg' %}" alt="Film 5" class="showcase-image img-5 film-showcase-image">
             </div>
