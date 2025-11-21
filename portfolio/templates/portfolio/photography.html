@@ -483,9 +483,6 @@
             fetch('{% url "contact_form_submit" %}', {
                 method: 'POST',
                 body: formData,
-                headers: {
-                    'X-CSRFToken': formData.get('csrfmiddlewaretoken'),
-                },
             })
             .then(response => response.json())
             .then(data => {
@@ -497,6 +494,7 @@
                 } else {
                     formStatus.textContent = data.message || 'An error occurred.';
                     formStatus.style.color = '#dc3545';
+                    console.log('Error details:', data);
                 }
             })
             .catch(error => {

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse, HttpResponse
 from django.conf import settings
+from django.views.decorators.csrf import ensure_csrf_cookie
 from .forms import ContactForm
 import os
 from sendgrid import SendGridAPIClient
@@ -14,6 +15,7 @@ def health_check(request):
 def index(request):
     return render(request, 'portfolio/index.html')
 
+@ensure_csrf_cookie
 def photography(request):
     return render(request, 'portfolio/photography.html')
 
