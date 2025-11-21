@@ -503,12 +503,14 @@
             .photo-showcase {
                 position: relative;
                 width: 100%;
-                height: 350px;
-                margin: 30px 0;
+                max-width: 100%;
+                height: 400px;
+                margin: 30px auto;
                 overflow: hidden;
                 border-radius: 20px;
                 box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
                 animation: none;
+                background: #000;
             }
             
             .showcase-container {
@@ -516,29 +518,26 @@
                 width: 100%;
                 height: 100%;
                 transition: transform 0.5s ease-in-out;
+                position: relative;
             }
             
             .showcase-image {
-                position: relative;
                 min-width: 100%;
+                max-width: 100%;
                 width: 100%;
                 height: 100%;
                 flex-shrink: 0;
+                object-fit: cover;
                 transform: none !important;
                 animation: none !important;
                 border-radius: 0;
-                object-fit: cover;
-            }
-            
-            .showcase-image:hover {
-                transform: none !important;
+                position: relative;
+                display: block;
             }
             
             .img-1, .img-2, .img-3, .img-4, .img-5 {
-                display: block;
-                position: relative;
-                width: 100%;
-                height: 100%;
+                display: block !important;
+                position: relative !important;
             }
             
             .showcase-dots {
@@ -548,16 +547,17 @@
                 left: 50%;
                 transform: translateX(-50%);
                 gap: 10px;
-                z-index: 10;
+                z-index: 100;
             }
             
             .dot {
                 width: 10px;
                 height: 10px;
                 border-radius: 50%;
-                background: rgba(255, 255, 255, 0.5);
+                background: rgba(255, 255, 255, 0.6);
                 cursor: pointer;
                 transition: all 0.3s;
+                border: 2px solid rgba(0, 0, 0, 0.3);
             }
             
             .dot.active {
@@ -582,6 +582,7 @@
                 height: 15px;
                 background: repeating-linear-gradient(90deg, #333 0, #333 10px, transparent 10px, transparent 20px);
                 z-index: 10;
+                pointer-events: none;
             }
             
             .film-showcase::before { top: -15px; }
