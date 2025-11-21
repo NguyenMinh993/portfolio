@@ -414,20 +414,49 @@
             margin-bottom: 10px;
         }
 
+        .skills-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
         .skills-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 12px;
             list-style: none;
             padding: 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
         }
 
         .skills-list li {
             background: rgba(255, 255, 255, 0.05);
-            padding: 10px 20px;
+            padding: 12px 16px;
             border-radius: 8px;
-            font-size: 14px;
+            text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s;
+            font-size: 14px;
+        }
+
+        .skills-list li:hover {
+            background: rgba(212, 175, 55, 0.1);
+            border-color: #d4af37;
+            transform: translateY(-3px);
+        }
+        
+        .cert-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .cert-list li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            line-height: 1.6;
+        }
+        
+        .cert-list li:last-child {
+            border-bottom: none;
         }
 
         .github-button {
@@ -574,9 +603,14 @@
             .hero-content h2 { font-size: 24px; }
             .section { padding: 60px 20px; }
             .section-title { font-size: 32px; }
+            .skills-grid { grid-template-columns: 1fr; gap: 20px; }
+            .skills-list { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .skills-list li { padding: 10px 12px; font-size: 13px; }
+            .cert-list li { font-size: 13px; padding: 10px 0; }
             .card { padding: 20px; margin-bottom: 20px; }
             .card h3 { font-size: 18px; }
             .card ul li { font-size: 13px; line-height: 1.6; }
+            .card .section-title { font-size: 28px !important; margin-bottom: 20px !important; }
             .highlight-card { padding: 25px 15px; }
             .contact-container { padding: 25px 15px; }
             .cyber-pet, .swimming-pool { display: none; }
@@ -591,9 +625,13 @@
             .hero-content h1 { font-size: 28px; }
             .hero-content h2 { font-size: 22px; }
             .section-title { font-size: 28px; }
-            .card { padding: 20px; }
-            .card h3 { font-size: 18px; }
-            .card ul li { font-size: 14px; }
+            .card { padding: 15px; }
+            .card h3 { font-size: 16px; }
+            .card ul li { font-size: 13px; }
+            .card .section-title { font-size: 24px !important; }
+            .skills-list { grid-template-columns: 1fr; }
+            .skills-list li { font-size: 12px; padding: 8px 10px; }
+            .cert-list li { font-size: 12px; }
         }
     </style>
 </head>
@@ -743,7 +781,7 @@
 
     <!-- Skills & Activities Section -->
     <section id="skills" class="section">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+        <div class="skills-grid">
             <div class="card" style="animation-delay: 0.5s;">
                 <h2 class="section-title" style="font-size: 36px; margin-bottom: 30px;">Skills & Abilities</h2>
                 <ul class="skills-list">
@@ -766,7 +804,7 @@
             </div>
             <div class="card" style="animation-delay: 0.6s;">
                 <h2 class="section-title" style="font-size: 36px; margin-bottom: 30px;">Activities & Certifications</h2>
-                <ul>
+                <ul class="cert-list">
                     <li>2023 International Conference on Services Computing (SCC 2023)</li>
                     <li>Web Design for Everybody: Basics of Web Development & Coding (Coursera)</li>
                     <li>Computer Communications (Coursera)</li>
