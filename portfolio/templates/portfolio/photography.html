@@ -107,6 +107,36 @@
             width: 100%;
         }
 
+        /* Mobile Menu Toggle */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            padding: 5px;
+            z-index: 1001;
+        }
+        
+        .menu-toggle span {
+            width: 25px;
+            height: 3px;
+            background: #d4af37;
+            margin: 3px 0;
+            transition: all 0.3s ease;
+            border-radius: 3px;
+        }
+        
+        .menu-toggle.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+        
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .menu-toggle.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
         /* Hero & Film Sections */
         .hero {
             display: grid;
@@ -248,6 +278,39 @@
             transform: scale(1.1);
         }
 
+        /* Gallery Collapse/Expand */
+        .photo-grid.collapsed .photo-item {
+            display: none;
+        }
+        
+        .photo-grid.collapsed .photo-item:nth-child(-n+3) {
+            display: block;
+        }
+        
+        .see-more-btn {
+            display: block;
+            margin: 40px auto 0;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #d4af37, #f4d03f);
+            border: none;
+            border-radius: 30px;
+            color: #1a1a1a;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(212, 175, 55, 0.3);
+        }
+        
+        .see-more-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(212, 175, 55, 0.5);
+        }
+        
+        .see-more-btn.hidden {
+            display: none;
+        }
+
         /* Contact Form */
         #contact { padding-bottom: 120px; }
         .contact-container {
@@ -322,8 +385,57 @@
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Responsive */
-        @media (max-width: 1024px) { .hero { grid-template-columns: 1fr; gap: 60px; text-align: center; } .hero-content p { margin: 0 auto 40px; } .photo-showcase { min-height: 350px; margin-top: 40px; } .contact-container { grid-template-columns: 1fr; padding: 40px; } .contact-info h2 { font-size: 36px; } }
-        @media (max-width: 768px) { nav { padding: 20px 30px; } .nav-links { display: none; } .hero { padding: 120px 30px 60px; } .hero-content h1 { font-size: 42px; } .gallery-section { padding: 80px 30px; } }
+        @media (max-width: 1024px) { 
+            .hero { grid-template-columns: 1fr; gap: 60px; text-align: center; } 
+            .hero-content p { margin: 0 auto 40px; } 
+            .photo-showcase { min-height: 350px; margin-top: 40px; } 
+            .contact-container { grid-template-columns: 1fr; padding: 40px; } 
+            .contact-info h2 { font-size: 36px; }
+            .photo-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        }
+        
+        @media (max-width: 768px) { 
+            nav { padding: 20px 30px; justify-content: space-between; }
+            
+            .menu-toggle { display: flex; }
+            
+            .nav-links { 
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: rgba(0, 0, 0, 0.95);
+                backdrop-filter: blur(20px);
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 30px;
+                transition: right 0.4s ease;
+                padding: 60px 30px;
+            }
+            
+            .nav-links.active { right: 0; }
+            
+            .nav-links a { font-size: 20px; }
+            
+            .hero { padding: 120px 30px 60px; } 
+            .hero-content h1 { font-size: 36px; } 
+            .gallery-section { padding: 80px 30px; }
+            .section-title { font-size: 36px; }
+            .photo-grid { grid-template-columns: 1fr; gap: 20px; }
+            .showcase-image { width: 80% !important; height: auto !important; }
+            .img-1, .img-2, .img-3 { position: relative !important; transform: none !important; margin: 10px auto; }
+            .contact-container { padding: 30px 20px; }
+        }
+        
+        @media (max-width: 480px) {
+            .logo-text { font-size: 18px; }
+            .logo-img { width: 35px; height: 35px; }
+            .hero-content h1 { font-size: 28px; }
+            .section-title { font-size: 28px; }
+            .see-more-btn { padding: 12px 30px; font-size: 14px; }
+        }
     </style>
 </head>
 <body>
@@ -333,7 +445,12 @@
             <img src="{% static 'portfolio/images/gen-h-13.jpg' %}" alt="Logo" class="logo-img">
             <span class="logo-text">Nguyen Van Minh</span>
         </a>
-        <ul class="nav-links">
+        <div class="menu-toggle" id="menu-toggle">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <ul class="nav-links" id="nav-links">
             <li><a href="{% url 'index' %}">Work</a></li>
             <li><a href="#photography" class="active">Photography</a></li>
             <li><a href="#film">Film</a></li>
@@ -372,7 +489,7 @@
     <!-- Gallery Section -->
     <section class="gallery-section">
         <h2 class="section-title">Gallery</h2>
-        <div class="photo-grid">
+        <div class="photo-grid collapsed" id="gallery-grid">
             <div class="photo-item" style="animation-delay: 0.1s;">
                 <img src="{% static 'portfolio/images/gen-h-3.jpg' %}" alt="Photography 1">
             </div>
@@ -410,12 +527,13 @@
                 <img src="{% static 'portfolio/images/gen-h-23.jpg' %}" alt="Photography 12">
             </div>
         </div>
+        <button class="see-more-btn" id="gallery-see-more">See More</button>
     </section>
 
     <!-- B&W Gallery Section -->
     <section class="gallery-section">
         <h2 class="section-title">B&W Collection</h2>
-        <div class="photo-grid">
+        <div class="photo-grid collapsed" id="bw-grid">
             <div class="photo-item" style="animation-delay: 0.1s;">
                 <img src="{% static 'portfolio/images/gen-h-6.jpg' %}" alt="B&W Photography 1" style="filter: grayscale(100%);">
             </div>
@@ -438,6 +556,7 @@
                 <img src="{% static 'portfolio/images/gen-h-12.jpg' %}" alt="B&W Photography 7" style="filter: grayscale(100%);">
             </div>
         </div>
+        <button class="see-more-btn" id="bw-see-more">See More</button>
     </section>
 
     <!-- Contact Section -->
@@ -487,6 +606,72 @@
         document.querySelectorAll('.photo-item, .section-title, .contact-container').forEach(el => {
             el.style.animationPlayState = 'paused';
             observer.observe(el);
+        });
+
+        // Gallery See More functionality
+        function setupSeeMore(gridId, btnId) {
+            const grid = document.getElementById(gridId);
+            const btn = document.getElementById(btnId);
+            const items = grid.querySelectorAll('.photo-item');
+            let currentVisible = 3;
+            
+            btn.addEventListener('click', function() {
+                if (currentVisible >= items.length) {
+                    return;
+                }
+                
+                // Show next 3 items one by one with animation
+                let count = 0;
+                const showNext = setInterval(() => {
+                    if (currentVisible < items.length && count < 3) {
+                        items[currentVisible].style.display = 'block';
+                        items[currentVisible].style.animation = 'fadeInUp 0.6s ease forwards';
+                        currentVisible++;
+                        count++;
+                    } else {
+                        clearInterval(showNext);
+                        
+                        // Hide button if all items are shown
+                        if (currentVisible >= items.length) {
+                            btn.textContent = 'All Photos Shown';
+                            btn.style.opacity = '0.5';
+                            btn.style.cursor = 'default';
+                            setTimeout(() => {
+                                btn.classList.add('hidden');
+                            }, 1000);
+                        }
+                    }
+                }, 200); // 200ms delay between each item
+            });
+        }
+        
+        // Setup for both galleries
+        setupSeeMore('gallery-grid', 'gallery-see-more');
+        setupSeeMore('bw-grid', 'bw-see-more');
+
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const navLinks = document.getElementById('nav-links');
+        
+        menuToggle.addEventListener('click', function() {
+            this.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+        
+        // Close menu when clicking on a link
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function() {
+                menuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+        
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!menuToggle.contains(event.target) && !navLinks.contains(event.target)) {
+                menuToggle.classList.remove('active');
+                navLinks.classList.remove('active');
+            }
         });
 
         // Contact Form Submission
