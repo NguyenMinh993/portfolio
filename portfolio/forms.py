@@ -120,3 +120,4 @@ class ContactForm(forms.Form):
     email = forms.EmailField(required=True)
     message = forms.CharField(widget=forms.Textarea, required=True)
     attachment = forms.FileField(required=False)
+    source_page = forms.CharField(required=False, max_length=100)
