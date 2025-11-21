@@ -203,8 +203,12 @@
                 box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
                 border: 2px solid rgba(255, 255, 255, 0.1);
                 object-fit: cover;
+                object-position: center;
                 transition: transform 0.3s ease;
                 background: #1a1a1a;
+                /* All images same aspect ratio 3:4 (portrait) */
+                width: 240px;
+                height: 320px;
             }
 
             .showcase-image:hover {
@@ -212,42 +216,32 @@
                 z-index: 10;
             }
 
-            /* All images same size: 300x220px */
+            /* Position each image with same size but different rotation/position */
             .img-1 {
-                width: 300px;
-                height: 220px;
                 transform: rotate(-12deg) translate(-50%, -20%);
                 animation: cardFloat 3.5s ease-in-out infinite;
                 z-index: 3;
             }
 
             .img-2 {
-                width: 300px;
-                height: 220px;
                 transform: rotate(-5deg) translate(-20%, 0);
                 animation: cardFloat2 4s ease-in-out infinite;
                 z-index: 4;
             }
 
             .img-3 {
-                width: 300px;
-                height: 220px;
                 z-index: 5;
                 transform: rotate(2deg) translate(0, 5%);
                 animation: cardFloat 3.8s ease-in-out infinite;
             }
 
             .img-4 {
-                width: 300px;
-                height: 220px;
                 transform: rotate(8deg) translate(25%, -5%);
                 animation: cardFloat2 4.2s ease-in-out infinite reverse;
                 z-index: 4;
             }
 
             .img-5 {
-                width: 300px;
-                height: 220px;
                 transform: rotate(15deg) translate(50%, 15%);
                 animation: cardFloat 3.2s ease-in-out infinite reverse;
                 z-index: 3;
