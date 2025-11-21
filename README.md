@@ -1,54 +1,206 @@
 # Django Portfolio - Nguyen Van Minh
 
-This is a dynamic and interactive personal portfolio website built with Django. It showcases my resume, skills, and projects in a visually engaging way, featuring several unique animations and interactive elements.
+A modern, dynamic portfolio website built with Django, featuring interactive animations, photography showcase, and admin panel for content management.
 
-## Features
+🌐 **Live Site:** [nguyenminh993.up.railway.app](https://nguyenminh993.up.railway.app)
 
-*   **Interactive Hero Section:** A lively introduction with multiple animations:
-    *   **Interactive Cyber-Pet:** A minimalist pet that follows your mouse clicks around the page with playful animations.
-    *   **Interactive Swimming Pool:** A stylized swimming pool where a "cyber-swimmer" moves to the location of your click, complete with a ripple effect.
-    *   **Typing Animation:** The subtitle dynamically types itself out on screen.
-    *   **Animated Gradient Text:** The main title has a subtle, shifting gradient.
-    *   **Floating Orbs:** The background features gently floating orbs for a sense of depth.
-*   **Photography & Film Showcase:** A dedicated page to display visual work, with a modern, elegant design and animated image showcases.
-*   **Dynamic Resume:** The main page is a comprehensive resume, detailing professional experience, skills, and certifications.
-*   **Responsive Design:** The entire site is designed to be fully responsive and looks great on all devices, from desktops to mobile phones.
+## ✨ Features
 
-## Technologies Used
+### Main Portfolio Page
+- **Interactive Hero Section** with typing animation and gradient effects
+- **Professional Experience** showcase with detailed project descriptions
+- **Skills & Certifications** display
+- **Contact Form** with SendGrid email integration
+- **Responsive Design** optimized for all devices
 
-*   **Backend:** Django, Python
-*   **Frontend:** HTML5, CSS3 (with custom animations), JavaScript
-*   **Deployment:** Prepared for deployment on platforms like PythonAnywhere.
+### Photography & Film Page
+- **Dual Gallery System**: Main gallery + B&W collection
+- **Animated Image Showcases** with hover effects
+- **Film-style Image Frames** with vintage aesthetics
+- **Smooth Scroll Animations** using Intersection Observer
 
-## Setup and Run
+### Admin Features
+- **Django Admin Panel** for content management
+- **CRUD Operations** for projects, photos, experiences, skills
+- **Cloudinary Integration** for image storage
+- **Custom Forms** with validation
 
-To run this project locally, follow these steps:
+## 🛠️ Technologies
 
-1.  **Clone the repository:**
-    ```sh
-    git clone https://github.com/your-username/your-repo-name.git
-    cd your-repo-name
-    ```
+**Backend:**
+- Django 5.1.3
+- Python 3.12
+- PostgreSQL (Production)
+- SQLite (Development)
 
-2.  **Create a virtual environment and install dependencies:**
-    ```sh
-    python -m venv venv
-    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-    pip install -r requirements.txt
-    ```
+**Frontend:**
+- HTML5, CSS3 with custom animations
+- JavaScript (Vanilla)
+- Google Fonts (Inter, Space Mono)
 
-3.  **Apply database migrations:**
-    ```sh
-    python manage.py migrate
-    ```
+**Deployment & Services:**
+- Railway (Hosting)
+- Cloudinary (Image Storage)
+- SendGrid (Email Service)
+- WhiteNoise (Static Files)
+- Gunicorn (WSGI Server)
 
-4.  **Run the development server:**
-    ```sh
-    python manage.py runserver
-    ```
+## 📦 Installation
 
-5.  Open your browser and navigate to `http://127.0.0.1:8000/` to see the portfolio in action.
+### Prerequisites
+- Python 3.12+
+- pip
+- Virtual environment
+
+### Local Setup
+
+1. **Clone the repository:**
+```bash
+git clone https://github.com/NguyenMinh993/portfolio.git
+cd portfolio
+```
+
+2. **Create virtual environment:**
+```bash
+python -m venv .venv
+# Windows
+.venv\Scripts\activate
+# Linux/Mac
+source .venv/bin/activate
+```
+
+3. **Install dependencies:**
+```bash
+pip install -r requirements.txt
+```
+
+4. **Set up environment variables:**
+Create `.env` file:
+```env
+SECRET_KEY=your-secret-key
+DEBUG=True
+SENDGRID_API_KEY=your-sendgrid-key
+FROM_EMAIL=your-email@example.com
+CLOUDINARY_CLOUD_NAME=your-cloud-name
+CLOUDINARY_API_KEY=your-api-key
+CLOUDINARY_API_SECRET=your-api-secret
+```
+
+5. **Run migrations:**
+```bash
+python manage.py migrate
+```
+
+6. **Create superuser:**
+```bash
+python manage.py createsuperuser
+# Or use the script
+python create_superuser.py
+```
+
+7. **Collect static files:**
+```bash
+python manage.py collectstatic
+```
+
+8. **Run development server:**
+```bash
+python manage.py runserver
+```
+
+Visit `http://127.0.0.1:8000/`
+
+## 🚀 Deployment (Railway)
+
+The project is configured for Railway deployment with:
+- `railway.toml` - Railway configuration
+- `build.sh` - Build script
+- `requirements-prod.txt` - Production dependencies
+- Gunicorn WSGI server
+- PostgreSQL database
+- WhiteNoise for static files
+
+### Deploy to Railway:
+1. Connect GitHub repository to Railway
+2. Set environment variables in Railway dashboard
+3. Deploy automatically on push to main branch
+
+## 📚 Documentation
+
+- **CLOUDINARY_SETUP.md** - Cloudinary configuration guide
+- **DATABASE_CRUD_GUIDE.md** - Admin panel usage
+- **DEPLOYMENT.md** - Deployment instructions
+- **RAILWAY_DATABASE_SETUP.md** - Railway database setup
+- **SENDGRID_ANTI_SPAM_SETUP.md** - Email deliverability guide
+
+## 🔧 Utility Scripts
+
+- `create_superuser.py` - Create admin user
+- `create_favicon.py` - Generate favicon from images
+- `update_portfolio.py` - Bulk update portfolio data
+
+## 📁 Project Structure
+
+```
+portfolio/
+├── DjangoProject/          # Django settings
+│   ├── settings.py
+│   ├── urls.py
+│   └── wsgi.py
+├── portfolio/              # Main app
+│   ├── admin.py           # Admin configuration
+│   ├── forms.py           # Form definitions
+│   ├── models.py          # Database models
+│   ├── views.py           # View functions
+│   ├── urls.py            # URL routing
+│   ├── static/            # Static files
+│   └── templates/         # HTML templates
+├── staticfiles/           # Collected static files
+├── manage.py
+├── requirements.txt
+└── README.md
+```
+
+## 🎨 Features in Detail
+
+### Contact Form
+- Email validation
+- File attachment support
+- SendGrid integration
+- Beautiful HTML email templates
+- Anti-spam configuration
+
+### Image Management
+- Cloudinary storage
+- Automatic thumbnail generation
+- Grayscale filter for B&W gallery
+- Responsive image loading
+
+### Admin Panel
+- Custom forms with image upload
+- CRUD operations for all models
+- Cloudinary integration
+- User authentication
+
+## 🔒 Security
+
+- Environment variables for sensitive data
+- CSRF protection
+- Secure password hashing
+- SQL injection prevention
+- XSS protection
+
+## 📝 License
+
+This project is open source and available under the MIT License.
+
+## 👤 Author
+
+**Nguyen Van Minh**
+- Email: nguyenminh090903@gmail.com
+- GitHub: [@NguyenMinh993](https://github.com/NguyenMinh993)
+- LinkedIn: [Văn Minh Nguyễn](https://www.linkedin.com/in/văn-minh-nguyễn)
 
 ---
 
-*This portfolio was designed to be both a professional resume and a showcase of creative web development skills.*
+*Built with ❤️ using Django*
