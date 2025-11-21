@@ -176,94 +176,101 @@
             font-size: 15px;
         }
 
-        /* Photo Showcase Carousel */
+        /* Photo Showcase - Desktop (Original Design) */
         .photo-showcase {
             position: relative;
-            width: 100%;
-            max-width: 600px;
-            height: 400px;
-            margin: 0 auto;
-            overflow: hidden;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            animation: float 4s ease-in-out infinite;
+            min-height: 400px;
         }
 
         .showcase-slider {
-            display: flex;
+            position: relative;
             width: 100%;
             height: 100%;
-            animation: slideShow 15s ease-in-out infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .showcase-image {
-            min-width: 100%;
-            height: 100%;
+            position: absolute;
+            border-radius: 12px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.1);
             object-fit: cover;
-            border-radius: 20px;
-            transition: transform 0.5s ease;
+            transition: transform 0.3s ease;
         }
 
         .showcase-image:hover {
-            transform: scale(1.05);
+            transform: scale(1.05) !important;
+            z-index: 10;
+        }
+
+        .showcase-image:nth-child(1) {
+            width: 300px;
+            height: 220px;
+            transform: rotate(-10deg) translate(-30%, -10%);
+            animation: cardFloat 3.5s ease-in-out infinite;
+        }
+
+        .showcase-image:nth-child(2) {
+            width: 350px;
+            height: 250px;
+            z-index: 5;
+            transform: rotate(5deg) translate(0, 0);
+            animation: cardFloat2 4s ease-in-out infinite;
+        }
+
+        .showcase-image:nth-child(3) {
+            width: 280px;
+            height: 200px;
+            transform: rotate(15deg) translate(30%, 20%);
+            animation: cardFloat 3s ease-in-out infinite reverse;
+        }
+
+        .showcase-image:nth-child(n+4) {
+            display: none;
         }
 
         .showcase-dots {
-            position: absolute;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 10px;
-            z-index: 10;
+            display: none;
         }
 
-        .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.5);
-            cursor: pointer;
-            transition: all 0.3s;
+        @keyframes float { 
+            0%, 100% { transform: translateY(0); } 
+            50% { transform: translateY(-15px); } 
         }
-
-        .dot.active {
-            background: #d4af37;
-            width: 30px;
-            border-radius: 5px;
+        @keyframes cardFloat { 
+            0%, 100% { transform: rotate(-10deg) translate(-30%, -10%); } 
+            50% { transform: rotate(-12deg) translate(-32%, -15%); } 
+        }
+        @keyframes cardFloat2 { 
+            0%, 100% { transform: rotate(5deg) translate(0, 0); } 
+            50% { transform: rotate(2deg) translate(2%, -5%); } 
         }
         
         /* Film Showcase Specific Styling */
-        .film-showcase {
-            border: 8px solid #333;
-            box-shadow: 0 0 0 3px #d4af37, 0 20px 60px rgba(0, 0, 0, 0.7);
-            border-radius: 8px;
+        .film-showcase .showcase-image {
+            border: 5px solid #333;
+            box-shadow: 0 0 0 2px #d4af37, 0 20px 50px rgba(0, 0, 0, 0.5);
             position: relative;
+            border-radius: 0;
         }
-        
-        .film-showcase::before, .film-showcase::after {
+        .film-showcase .showcase-image::before, 
+        .film-showcase .showcase-image::after {
             content: '';
             position: absolute;
-            left: -8px;
-            right: -8px;
-            height: 15px;
-            background: repeating-linear-gradient(90deg, #333 0, #333 10px, transparent 10px, transparent 20px);
-            z-index: 10;
+            left: 0;
+            right: 0;
+            height: 10px;
+            background: repeating-linear-gradient(90deg, #333 0, #333 8px, transparent 8px, transparent 16px);
+            z-index: 1;
         }
-        .film-showcase::before { top: -15px; }
-        .film-showcase::after { bottom: -15px; }
-        
-        .film-showcase .showcase-slider {
-            animation: slideShowFilm 20s ease-in-out infinite;
-        }
-        
-        @keyframes slideShowFilm { 
-            0%, 16% { transform: translateX(0%); }
-            20%, 36% { transform: translateX(-100%); }
-            40%, 56% { transform: translateX(-200%); }
-            60%, 76% { transform: translateX(-300%); }
-            80%, 96% { transform: translateX(-400%); }
-            100% { transform: translateX(0%); }
-        }
+        .film-showcase .showcase-image::before { top: -10px; }
+        .film-showcase .showcase-image::after { bottom: -10px; }
 
         /* Gallery Section */
         .gallery-section {
@@ -412,13 +419,6 @@
         @keyframes slideDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
         @keyframes fadeInLeft { from { opacity: 0; transform: translateX(-50px); } to { opacity: 1; transform: translateX(0); } }
         @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideShow { 
-            0%, 20% { transform: translateX(0%); }
-            25%, 45% { transform: translateX(-100%); }
-            50%, 70% { transform: translateX(-200%); }
-            75%, 95% { transform: translateX(-300%); }
-            100% { transform: translateX(0%); }
-        }
 
         /* Responsive */
         @media (max-width: 1024px) { 
@@ -463,10 +463,77 @@
             .gallery-section { padding: 60px 20px; }
             .section-title { font-size: 32px; }
             .photo-grid { grid-template-columns: 1fr; gap: 15px; }
-            .photo-showcase { max-width: 100%; height: 300px; margin: 20px auto; }
-            .showcase-dots { bottom: 10px; }
-            .dot { width: 8px; height: 8px; }
-            .dot.active { width: 24px; }
+            
+            /* Mobile Carousel */
+            .photo-showcase { 
+                max-width: 100%;
+                height: 300px;
+                margin: 20px auto;
+                overflow: hidden;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+                animation: none;
+            }
+            .showcase-slider {
+                display: flex;
+                animation: slideShow 15s ease-in-out infinite;
+            }
+            .showcase-image {
+                position: relative;
+                min-width: 100%;
+                height: 100%;
+                transform: none !important;
+                animation: none !important;
+                border-radius: 0;
+            }
+            .showcase-image:nth-child(n+1) {
+                display: block;
+            }
+            .showcase-dots { 
+                display: flex;
+                position: absolute;
+                bottom: 10px;
+                left: 50%;
+                transform: translateX(-50%);
+                gap: 10px;
+                z-index: 10;
+            }
+            .dot { 
+                width: 8px;
+                height: 8px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.5);
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+            .dot.active { 
+                width: 24px;
+                border-radius: 5px;
+                background: #d4af37;
+            }
+            
+            /* Film Showcase Mobile */
+            .film-showcase .showcase-slider {
+                animation: slideShowFilm 20s ease-in-out infinite;
+            }
+            
+            @keyframes slideShow { 
+                0%, 20% { transform: translateX(0%); }
+                25%, 45% { transform: translateX(-100%); }
+                50%, 70% { transform: translateX(-200%); }
+                75%, 95% { transform: translateX(-300%); }
+                100% { transform: translateX(0%); }
+            }
+            
+            @keyframes slideShowFilm { 
+                0%, 16% { transform: translateX(0%); }
+                20%, 36% { transform: translateX(-100%); }
+                40%, 56% { transform: translateX(-200%); }
+                60%, 76% { transform: translateX(-300%); }
+                80%, 96% { transform: translateX(-400%); }
+                100% { transform: translateX(0%); }
+            }
+            
             .contact-container { padding: 25px 15px; }
             .form-group input, .form-group textarea { font-size: 14px; padding: 12px; }
             .submit-btn { font-size: 14px; padding: 14px; }
@@ -712,15 +779,18 @@
         setupSeeMore('gallery-grid', 'gallery-see-more');
         setupSeeMore('bw-grid', 'bw-see-more');
 
-        // Showcase Carousel Dots Animation
+        // Showcase Carousel Dots Animation (Mobile Only)
         function setupShowcaseDots() {
+            // Only run on mobile
+            if (window.innerWidth > 768) return;
+            
             const showcases = document.querySelectorAll('.photo-showcase');
             
             showcases.forEach(showcase => {
                 const dots = showcase.querySelectorAll('.dot');
                 const isFilm = showcase.classList.contains('film-showcase');
                 const totalSlides = dots.length;
-                const duration = isFilm ? 20000 : 15000; // 20s for film, 15s for photo
+                const duration = isFilm ? 20000 : 15000;
                 const slideTime = duration / totalSlides;
                 
                 let currentSlide = 0;
@@ -731,7 +801,6 @@
                     dots[currentSlide].classList.add('active');
                 }, slideTime);
                 
-                // Click on dots to change slide (visual only, animation continues)
                 dots.forEach((dot, index) => {
                     dot.addEventListener('click', () => {
                         dots.forEach(d => d.classList.remove('active'));
@@ -743,6 +812,13 @@
         }
         
         setupShowcaseDots();
+        
+        // Re-setup on resize
+        window.addEventListener('resize', () => {
+            if (window.innerWidth <= 768) {
+                setupShowcaseDots();
+            }
+        });
 
         // Mobile Menu Toggle
         const menuToggle = document.getElementById('menu-toggle');
