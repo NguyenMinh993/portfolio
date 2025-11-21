@@ -50,34 +50,71 @@ def contact_form_submit(request):
             <html>
             <head>
                 <meta charset="UTF-8">
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
                 <style>
-                    body {{ font-family: 'Segoe UI', Arial, sans-serif; background: #fef6e4; margin: 0; padding: 20px; }}
-                    .container {{ max-width: 600px; margin: 0 auto; background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.15); border: 3px solid #f3d250; }}
-                    .top-banner {{ background: {theme_gradient}; padding: 20px; text-align: center; }}
-                    .top-banner p {{ color: white; margin: 0; font-size: 14px; font-weight: 600; }}
-                    .header {{ background: linear-gradient(180deg, #fff 0%, #f8f9fa 100%); padding: 40px 30px 30px; text-align: center; }}
-                    .icon-badge {{ font-size: 48px; margin-bottom: 15px; }}
-                    .header h1 {{ color: #2c3e50; margin: 0; font-size: 36px; font-weight: 800; line-height: 1.2; }}
-                    .header p {{ color: #7f8c8d; margin: 12px 0 0; font-size: 16px; }}
-                    .content {{ padding: 35px 30px; }}
-                    .greeting {{ background: {theme_gradient}; color: white; padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 30px; }}
-                    .greeting h2 {{ margin: 0 0 8px; font-size: 22px; }}
-                    .greeting p {{ margin: 0; font-size: 14px; opacity: 0.95; }}
-                    .info-box {{ background: #f8f9fa; border-radius: 12px; padding: 20px; margin-bottom: 25px; border-left: 5px solid {theme_color}; }}
-                    .info-row {{ display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #e9ecef; }}
+                    * {{ margin: 0; padding: 0; box-sizing: border-box; }}
+                    body {{ font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; background: #f5f5f5; margin: 0; padding: 0; }}
+                    .container {{ max-width: 600px; margin: 0 auto; background: white; }}
+                    .header {{ background: {theme_color}; padding: 30px 20px; text-align: center; }}
+                    .icon {{ font-size: 48px; margin-bottom: 10px; }}
+                    .header h1 {{ color: white; font-size: 24px; font-weight: 700; margin: 0; }}
+                    .content {{ padding: 20px; }}
+                    .info-card {{ background: #f8f9fa; border-radius: 8px; padding: 15px; margin: 15px 0; }}
+                    .info-row {{ padding: 10px 0; border-bottom: 1px solid #e9ecef; }}
                     .info-row:last-child {{ border-bottom: none; }}
-                    .info-label {{ font-weight: 700; color: #2c3e50; font-size: 14px; }}
-                    .info-value {{ color: #7f8c8d; font-size: 14px; text-align: right; }}
-                    .message-section {{ margin: 30px 0; }}
-                    .message-label {{ font-size: 14px; font-weight: 700; color: {theme_color}; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }}
-                    .message-box {{ background: linear-gradient(135deg, #fff5e6 0%, #ffe6cc 100%); padding: 25px; border-radius: 12px; border: 2px dashed {theme_color}; white-space: pre-wrap; font-size: 16px; line-height: 1.8; color: #2c3e50; min-height: 100px; }}
-                    .cta-section {{ text-align: center; margin: 35px 0; padding: 30px; background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%); border-radius: 12px; }}
-                    .cta-button {{ display: inline-block; background: {theme_gradient}; color: white; padding: 15px 40px; border-radius: 30px; text-decoration: none; font-weight: 700; font-size: 16px; box-shadow: 0 4px 15px rgba(0,0,0,0.2); }}
-                    .footer {{ background: #2c3e50; padding: 30px; text-align: center; }}
-                    .footer-logo {{ color: white; font-size: 24px; font-weight: 800; margin-bottom: 15px; }}
-                    .footer-links {{ margin: 20px 0; }}
-                    .footer-links a {{ color: {theme_color}; text-decoration: none; margin: 0 15px; font-size: 14px; font-weight: 600; }}
-                    .footer p {{ color: rgba(255,255,255,0.7); font-size: 13px; margin: 8px 0; }}
+                    .label {{ font-weight: 700; color: #2c3e50; font-size: 13px; margin-bottom: 5px; }}
+                    .value {{ color: #7f8c8d; font-size: 14px; word-break: break-word; }}
+                    .message-box {{ background: #fff5e6; padding: 20px; border-radius: 8px; border-left: 4px solid {theme_color}; margin: 20px 0; }}
+                    .message-text {{ color: #2c3e50; font-size: 15px; line-height: 1.6; white-space: pre-wrap; word-wrap: break-word; }}
+                    .button {{ display: inline-block; background: {theme_color}; color: white; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: 600; font-size: 14px; margin: 20px 0; }}
+                    .footer {{ background: #2c3e50; padding: 20px; text-align: center; color: rgba(255,255,255,0.7); font-size: 12px; }}
+                    @media only screen and (max-width: 600px) {{
+                        .container {{ width: 100% !important; }}
+                        .content {{ padding: 15px !important; }}
+                        .header {{ padding: 20px 15px !important; }}
+                        .header h1 {{ font-size: 20px !important; }}
+                        .icon {{ font-size: 36px !important; }}
+                        .message-box {{ padding: 15px !important; }}
+                        .button {{ padding: 10px 25px !important; font-size: 13px !important; }}
+                    }}
+                </style>
+            </head>
+            <body>
+                <div class="container">
+                    <div class="header">
+                        <div class="icon">{icon}</div>
+                        <h1>{title}</h1>
+                    </div>
+                    <div class="content">
+                        <div class="info-card">
+                            <div class="info-row">
+                                <div class="label">📧 From</div>
+                                <div class="value">{user_email}</div>
+                            </div>
+                            <div class="info-row">
+                                <div class="label">🕐 Time</div>
+                                <div class="value">{current_time}</div>
+                            </div>
+                            <div class="info-row">
+                                <div class="label">📍 Source</div>
+                                <div class="value">{source_page}</div>
+                            </div>
+                        </div>
+                        <div class="message-box">
+                            <div class="label" style="margin-bottom: 10px;">💬 Message</div>
+                            <div class="message-text">{message}</div>
+                        </div>
+                        <div style="text-align: center;">
+                            <a href="mailto:{user_email}" class="button">Reply Now →</a>
+                        </div>
+                    </div>
+                    <div class="footer">
+                        <p>📧 Portfolio Contact Form</p>
+                        <p style="margin-top: 10px;">© 2025 Nguyen Van Minh</p>
+                    </div>
+                </div>
+            </body>
+            </html>
                     .social-icons {{ margin: 20px 0; }}
                     .social-icons span {{ display: inline-block; margin: 0 8px; font-size: 20px; }}
                 </style>
