@@ -34,6 +34,9 @@ def contact_form_submit(request):
             import datetime
             current_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
             
+            sendgrid_key = os.environ.get('SENDGRID_API_KEY')
+            use_sendgrid = bool(sendgrid_key)
+            
             # Different themes based on source page
             if 'photo' in source_page.lower():
                 theme_color = '#e74c3c'
