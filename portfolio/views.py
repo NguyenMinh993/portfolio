@@ -147,12 +147,38 @@ def contact_form_submit(request):
             </html>
             '''
             
+            # Create plain text version for better deliverability
+            plain_text = f"""
+New Contact from Portfolio
+
+From: {user_email}
+Time: {current_time}
+Source: {source_page}
+
+Message:
+{message}
+
+---
+Reply to: {user_email}
+            """
+            
             message_obj = Mail(
-                from_email=os.environ.get('FROM_EMAIL', 'nguyenminh090903@gmail.com'),
+                from_email=('noreply@nguyenminh993.up.railway.app', 'Portfolio Contact Form'),
                 to_emails='nguyenminh090903@gmail.com',
                 subject=subject,
+                plain_text_content=plain_text,
                 html_content=html_content
             )
+            
+            # Set reply-to to user's email
+            message_obj.reply_to = user_email
+            
+            # Add categories and custom args for tracking
+            message_obj.category = ['portfolio-contact', source_page.lower().replace(' ', '-')]
+            message_obj.custom_arg = {
+                'source': source_page,
+                'user_email': user_email
+            }
             
             # Add attachment if present
             if attachment:
