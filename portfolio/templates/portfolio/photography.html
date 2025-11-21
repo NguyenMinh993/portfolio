@@ -176,7 +176,7 @@
             font-size: 15px;
         }
 
-        /* Photo Showcase */
+        /* Photo Showcase - Desktop */
         .photo-showcase {
             position: relative;
             display: flex;
@@ -184,6 +184,15 @@
             align-items: center;
             min-height: 400px;
             animation: float 4s ease-in-out infinite;
+        }
+
+        .showcase-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .showcase-image {
@@ -220,6 +229,14 @@
             height: 200px;
             transform: rotate(15deg) translate(30%, 20%);
             animation: cardFloat 3s ease-in-out infinite reverse;
+        }
+
+        .img-4, .img-5 {
+            display: none;
+        }
+
+        .showcase-dots {
+            display: none;
         }
 
         @keyframes float { 
@@ -476,10 +493,93 @@
                 height: 100%;
             }
             
-            /* Mobile - Hide showcase */
+            /* Mobile Carousel */
             .photo-showcase {
-                display: none;
+                position: relative;
+                width: 100%;
+                height: 350px;
+                margin: 30px 0;
+                overflow: hidden;
+                border-radius: 20px;
+                box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+                animation: none;
             }
+            
+            .showcase-container {
+                display: flex;
+                width: 100%;
+                height: 100%;
+                transition: transform 0.5s ease-in-out;
+            }
+            
+            .showcase-image {
+                position: relative;
+                min-width: 100%;
+                width: 100%;
+                height: 100%;
+                flex-shrink: 0;
+                transform: none !important;
+                animation: none !important;
+                border-radius: 0;
+                object-fit: cover;
+            }
+            
+            .showcase-image:hover {
+                transform: none !important;
+            }
+            
+            .img-1, .img-2, .img-3, .img-4, .img-5 {
+                display: block;
+                position: relative;
+                width: 100%;
+                height: 100%;
+            }
+            
+            .showcase-dots {
+                display: flex;
+                position: absolute;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                gap: 10px;
+                z-index: 10;
+            }
+            
+            .dot {
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.5);
+                cursor: pointer;
+                transition: all 0.3s;
+            }
+            
+            .dot.active {
+                width: 30px;
+                border-radius: 5px;
+                background: #d4af37;
+            }
+            
+            /* Film Showcase Mobile */
+            .film-showcase {
+                border: 8px solid #333;
+                box-shadow: 0 0 0 3px #d4af37, 0 20px 60px rgba(0, 0, 0, 0.7);
+                border-radius: 8px;
+            }
+            
+            .film-showcase::before,
+            .film-showcase::after {
+                content: '';
+                position: absolute;
+                left: -8px;
+                right: -8px;
+                height: 15px;
+                background: repeating-linear-gradient(90deg, #333 0, #333 10px, transparent 10px, transparent 20px);
+                z-index: 10;
+            }
+            
+            .film-showcase::before { top: -15px; }
+            .film-showcase::after { bottom: -15px; }
             
             .contact-container { padding: 25px 15px; }
             .form-group input, .form-group textarea { font-size: 14px; padding: 12px; }
@@ -522,10 +622,19 @@
             <p>A curated collection of moments captured through my lens. This gallery is a visual diary of my journey, exploring light, composition, and the stories that unfold in a single frame.</p>
         </div>
 
-        <div class="photo-showcase">
-            <img src="{% static 'portfolio/images/gen-h-4.jpg' %}" alt="Photography 1" class="showcase-image img-1">
-            <img src="{% static 'portfolio/images/gen-h-22.jpg' %}" alt="Photography 2" class="showcase-image img-2">
-            <img src="{% static 'portfolio/images/gen-h-23.jpg' %}" alt="Photography 3" class="showcase-image img-3">
+        <div class="photo-showcase" id="photo-showcase">
+            <div class="showcase-container">
+                <img src="{% static 'portfolio/images/gen-h-4.jpg' %}" alt="Photography 1" class="showcase-image img-1">
+                <img src="{% static 'portfolio/images/gen-h-22.jpg' %}" alt="Photography 2" class="showcase-image img-2">
+                <img src="{% static 'portfolio/images/gen-h-23.jpg' %}" alt="Photography 3" class="showcase-image img-3">
+                <img src="{% static 'portfolio/images/gen-h-15.jpg' %}" alt="Photography 4" class="showcase-image img-4">
+            </div>
+            <div class="showcase-dots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+                <span class="dot" data-index="3"></span>
+            </div>
         </div>
     </section>
 
@@ -536,10 +645,21 @@
             <p>Exploring the art of storytelling through motion. This collection showcases my work in film, from short clips to cinematic sequences, focusing on narrative, mood, and visual artistry.</p>
         </div>
 
-        <div class="photo-showcase">
-            <img src="{% static 'portfolio/images/gen-h-film.jpg' %}" alt="Film 1" class="showcase-image img-1 film-showcase-image">
-            <img src="{% static 'portfolio/images/gen-h-film4.jpg' %}" alt="Film 2" class="showcase-image img-2 film-showcase-image">
-            <img src="{% static 'portfolio/images/gen-h-film3.jpg' %}" alt="Film 3" class="showcase-image img-3 film-showcase-image">
+        <div class="photo-showcase film-showcase" id="film-showcase">
+            <div class="showcase-container">
+                <img src="{% static 'portfolio/images/gen-h-film.jpg' %}" alt="Film 1" class="showcase-image img-1 film-showcase-image">
+                <img src="{% static 'portfolio/images/gen-h-film4.jpg' %}" alt="Film 2" class="showcase-image img-2 film-showcase-image">
+                <img src="{% static 'portfolio/images/gen-h-film3.jpg' %}" alt="Film 3" class="showcase-image img-3 film-showcase-image">
+                <img src="{% static 'portfolio/images/gen-h-film5.jpg' %}" alt="Film 4" class="showcase-image img-4 film-showcase-image">
+                <img src="{% static 'portfolio/images/gen-h-film6.jpg' %}" alt="Film 5" class="showcase-image img-5 film-showcase-image">
+            </div>
+            <div class="showcase-dots">
+                <span class="dot active" data-index="0"></span>
+                <span class="dot" data-index="1"></span>
+                <span class="dot" data-index="2"></span>
+                <span class="dot" data-index="3"></span>
+                <span class="dot" data-index="4"></span>
+            </div>
         </div>
     </section>
 
@@ -706,7 +826,96 @@
         setupSeeMore('gallery-grid', 'gallery-see-more');
         setupSeeMore('bw-grid', 'bw-see-more');
 
-
+        // Mobile Carousel (Only on mobile)
+        function initMobileCarousel() {
+            if (window.innerWidth > 768) return;
+            
+            const showcases = document.querySelectorAll('.photo-showcase');
+            
+            showcases.forEach(showcase => {
+                const container = showcase.querySelector('.showcase-container');
+                const dots = showcase.querySelectorAll('.dot');
+                const images = showcase.querySelectorAll('.showcase-image');
+                let currentIndex = 0;
+                let autoPlayInterval;
+                
+                function goToSlide(index) {
+                    currentIndex = index;
+                    container.style.transform = `translateX(-${currentIndex * 100}%)`;
+                    
+                    dots.forEach((dot, i) => {
+                        dot.classList.toggle('active', i === currentIndex);
+                    });
+                }
+                
+                function nextSlide() {
+                    currentIndex = (currentIndex + 1) % images.length;
+                    goToSlide(currentIndex);
+                }
+                
+                function startAutoPlay() {
+                    autoPlayInterval = setInterval(nextSlide, 4000);
+                }
+                
+                function stopAutoPlay() {
+                    clearInterval(autoPlayInterval);
+                }
+                
+                // Dot click
+                dots.forEach((dot, index) => {
+                    dot.addEventListener('click', () => {
+                        stopAutoPlay();
+                        goToSlide(index);
+                        startAutoPlay();
+                    });
+                });
+                
+                // Touch swipe
+                let touchStartX = 0;
+                let touchEndX = 0;
+                
+                container.addEventListener('touchstart', (e) => {
+                    touchStartX = e.changedTouches[0].screenX;
+                    stopAutoPlay();
+                });
+                
+                container.addEventListener('touchend', (e) => {
+                    touchEndX = e.changedTouches[0].screenX;
+                    handleSwipe();
+                    startAutoPlay();
+                });
+                
+                function handleSwipe() {
+                    if (touchStartX - touchEndX > 50) {
+                        // Swipe left
+                        currentIndex = (currentIndex + 1) % images.length;
+                        goToSlide(currentIndex);
+                    } else if (touchEndX - touchStartX > 50) {
+                        // Swipe right
+                        currentIndex = (currentIndex - 1 + images.length) % images.length;
+                        goToSlide(currentIndex);
+                    }
+                }
+                
+                startAutoPlay();
+            });
+        }
+        
+        // Init carousel on mobile
+        if (window.innerWidth <= 768) {
+            initMobileCarousel();
+        }
+        
+        // Re-init on resize
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(() => {
+                if (window.innerWidth <= 768) {
+                    initMobileCarousel();
+                }
+            }, 250);
+        });
 
         // Mobile Menu Toggle
         const menuToggle = document.getElementById('menu-toggle');
