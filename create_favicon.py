@@ -19,14 +19,15 @@ def create_favicon():
         width, height = img.size
         center_x, center_y = width // 2, height // 2
         
-        # Calculate crop box for 200% zoom (crop to 50% of original size from center)
-        crop_size = min(width, height) // 2
+        # Calculate crop box for 150% zoom (crop to 66.67% of original size from center)
+        # 150% zoom = 1/1.5 = 0.6667 of original size
+        crop_size = int(min(width, height) * 0.6667)
         left = center_x - crop_size // 2
         top = center_y - crop_size // 2
         right = center_x + crop_size // 2
         bottom = center_y + crop_size // 2
         
-        # Crop to center (this creates 200% zoom effect)
+        # Crop to center (this creates 150% zoom effect)
         img_cropped = img.crop((left, top, right, bottom))
         print(f"✓ Cropped to center: {img_cropped.size}")
         
@@ -57,7 +58,7 @@ def create_favicon():
         print("\n✅ Favicon created successfully!")
         print(f"   - PNG: {output_path}")
         print(f"   - ICO: {ico_path}")
-        print("   - Zoom: 200% (center crop)")
+        print("   - Zoom: 150% (center crop)")
         print("   - Color: Black & White")
         
     except FileNotFoundError:
