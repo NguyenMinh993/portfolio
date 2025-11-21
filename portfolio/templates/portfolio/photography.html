@@ -210,29 +210,43 @@
         }
 
         .img-1 {
-            width: 300px;
-            height: 220px;
-            transform: rotate(-10deg) translate(-30%, -10%);
+            width: 280px;
+            height: 200px;
+            transform: rotate(-12deg) translate(-50%, -20%);
             animation: cardFloat 3.5s ease-in-out infinite;
+            z-index: 3;
         }
 
         .img-2 {
-            width: 350px;
-            height: 250px;
-            z-index: 5;
-            transform: rotate(5deg) translate(0, 0);
+            width: 300px;
+            height: 220px;
+            transform: rotate(-5deg) translate(-20%, 0);
             animation: cardFloat2 4s ease-in-out infinite;
+            z-index: 4;
         }
 
         .img-3 {
-            width: 280px;
-            height: 200px;
-            transform: rotate(15deg) translate(30%, 20%);
-            animation: cardFloat 3s ease-in-out infinite reverse;
+            width: 350px;
+            height: 250px;
+            z-index: 5;
+            transform: rotate(2deg) translate(0, 5%);
+            animation: cardFloat 3.8s ease-in-out infinite;
         }
 
-        .img-4, .img-5 {
-            display: none;
+        .img-4 {
+            width: 300px;
+            height: 220px;
+            transform: rotate(8deg) translate(25%, -5%);
+            animation: cardFloat2 4.2s ease-in-out infinite reverse;
+            z-index: 4;
+        }
+
+        .img-5 {
+            width: 280px;
+            height: 200px;
+            transform: rotate(15deg) translate(50%, 15%);
+            animation: cardFloat 3.2s ease-in-out infinite reverse;
+            z-index: 3;
         }
         
         /* Ensure all showcase images use contain on mobile */
