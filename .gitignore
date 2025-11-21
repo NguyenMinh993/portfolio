@@ -19,10 +19,11 @@ staticfiles/
 
 # Images - Protect all images from being pushed to GitHub
 portfolio/Image/
-portfolio/static/portfolio/images/
-*.jpg
-*.jpeg
-*.png
-*.gif
-*.webp
-*.svg
+portfolio/static/portfolio/images/*.jpg
+portfolio/static/portfolio/images/*.jpeg
+portfolio/static/portfolio/images/gen-*.jpg
+portfolio/static/portfolio/images/gen-*.png
+
+# Allow favicon files
+!portfolio/static/portfolio/images/favicon.png
+!portfolio/static/portfolio/images/favicon.ico
