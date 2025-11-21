@@ -299,6 +299,7 @@
             transition: transform 0.4s ease, box-shadow 0.4s ease;
             animation: fadeInUp 1s ease;
             animation-fill-mode: both;
+            aspect-ratio: 4/3;
         }
         
         .photo-item:hover {
@@ -311,6 +312,7 @@
             height: 100%;
             object-fit: cover;
             transition: transform 0.4s ease;
+            display: block;
         }
 
         .photo-item:hover img {
@@ -427,7 +429,13 @@
             .photo-showcase { min-height: 350px; margin-top: 40px; } 
             .contact-container { grid-template-columns: 1fr; padding: 40px; } 
             .contact-info h2 { font-size: 36px; }
-            .photo-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+            .photo-grid { 
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+            }
+            .photo-item {
+                aspect-ratio: 3/4;
+            }
         }
         
         @media (max-width: 768px) { 
@@ -461,8 +469,14 @@
             .hero-content h1 { font-size: 32px; } 
             .hero-content p { font-size: 14px; }
             .gallery-section { padding: 60px 20px; }
-            .section-title { font-size: 32px; }
-            .photo-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
+            .section-title { font-size: 32px; margin-bottom: 40px; }
+            .photo-grid { 
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+            }
+            .photo-item {
+                aspect-ratio: 1/1;
+            }
             
             /* Mobile Carousel */
             .photo-showcase { 
