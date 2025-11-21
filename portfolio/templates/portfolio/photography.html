@@ -187,68 +187,73 @@
         }
 
         /* Desktop showcase styles - only apply on screens wider than 768px */
+        /* Desktop Carousel - Same as mobile but larger */
         @media (min-width: 769px) {
+            .photo-showcase {
+                width: 600px;
+                height: 450px;
+                padding-bottom: 0;
+                margin: 0 auto;
+                border-radius: 20px;
+            }
+            
             .showcase-container {
-                position: relative;
+                display: flex;
                 width: 100%;
                 height: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
+                transition: transform 0.5s ease-in-out;
+                position: relative;
             }
 
             .showcase-image {
-                position: absolute;
-                border-radius: 12px;
-                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
-                border: 2px solid rgba(255, 255, 255, 0.1);
+                position: relative !important;
+                min-width: 100%;
+                width: 100%;
+                height: 100%;
+                flex-shrink: 0;
                 object-fit: cover;
                 object-position: center;
-                transition: transform 0.3s ease;
+                border-radius: 20px;
+                box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+                border: 2px solid rgba(255, 255, 255, 0.1);
                 background: #1a1a1a;
-                /* All images same aspect ratio 4:3 (landscape) */
-                width: 320px;
-                height: 240px;
+                transform: none !important;
+                animation: none !important;
             }
 
             .showcase-image:hover {
-                transform: scale(1.05) !important;
-                z-index: 10;
+                transform: scale(1.02) !important;
             }
 
-            /* Position each image with same size but different rotation/position */
-            .img-1 {
-                transform: rotate(-12deg) translate(-50%, -20%);
-                animation: cardFloat 3.5s ease-in-out infinite;
-                z-index: 3;
-            }
-
-            .img-2 {
-                transform: rotate(-5deg) translate(-20%, 0);
-                animation: cardFloat2 4s ease-in-out infinite;
-                z-index: 4;
-            }
-
-            .img-3 {
-                z-index: 5;
-                transform: rotate(2deg) translate(0, 5%);
-                animation: cardFloat 3.8s ease-in-out infinite;
-            }
-
-            .img-4 {
-                transform: rotate(8deg) translate(25%, -5%);
-                animation: cardFloat2 4.2s ease-in-out infinite reverse;
-                z-index: 4;
-            }
-
-            .img-5 {
-                transform: rotate(15deg) translate(50%, 15%);
-                animation: cardFloat 3.2s ease-in-out infinite reverse;
-                z-index: 3;
+            .img-1, .img-2, .img-3, .img-4, .img-5 {
+                display: block !important;
+                position: relative !important;
             }
 
             .showcase-dots {
-                display: none;
+                display: flex;
+                position: absolute;
+                bottom: 20px;
+                left: 50%;
+                transform: translateX(-50%);
+                gap: 12px;
+                z-index: 100;
+            }
+            
+            .dot {
+                width: 12px;
+                height: 12px;
+                border-radius: 50%;
+                background: rgba(255, 255, 255, 0.6);
+                cursor: pointer;
+                transition: all 0.3s;
+                border: 2px solid rgba(0, 0, 0, 0.3);
+            }
+            
+            .dot.active {
+                width: 35px;
+                border-radius: 6px;
+                background: #d4af37;
             }
         }
         
@@ -957,6 +962,41 @@
         if (window.innerWidth <= 768) {
             initCarousel('photo-showcase');
             initCarousel('film-showcase');
+        }
+        
+        // Desktop: Auto-rotate z-index to bring different images to front
+        function initDesktopRotation(showcaseId) {
+            if (window.innerWidth <= 768) return;
+            
+            const showcase = document.getElementById(showcaseId);
+            if (!showcase) return;
+            
+            const images = showcase.querySelectorAll('.showcase-image');
+            let currentFront = 2; // Start with img-3 (index 2) on top
+            
+            function rotateImages() {
+                images.forEach((img, index) => {
+                    if (index === currentFront) {
+                        img.style.zIndex = '10';
+                        img.style.transform = img.style.transform.replace(/scale\([^)]*\)/, '') + ' scale(1.1)';
+                    } else {
+                        const baseZIndex = index < currentFront ? index + 3 : index + 2;
+                        img.style.zIndex = baseZIndex;
+                        img.style.transform = img.style.transform.replace(/scale\([^)]*\)/, '');
+                    }
+                });
+                
+                currentFront = (currentFront + 1) % images.length;
+            }
+            
+            // Rotate every 3 seconds
+            setInterval(rotateImages, 3000);
+        }
+        
+        // Init desktop rotation for both showcases
+        if (window.innerWidth > 768) {
+            initDesktopRotation('photo-showcase');
+            initDesktopRotation('film-showcase');
         }
 
         // Mobile Menu Toggle
