@@ -5,8 +5,8 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from .forms import ContactForm
 import os
 from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail, Attachment, FileContent, FileName, FileType, Disposition, ReplyTo, Category
-import base64
+from sendgrid.helpers.mail import Mail
+import datetime
 
 def health_check(request):
     """Simple health check endpoint"""
@@ -30,12 +30,8 @@ def contact_form_submit(request):
 
             subject = f"New Contact: {source_page}"
             
-            # Use SendGrid API with beautiful HTML template
-            import datetime
+            # Use Django SMTP with beautiful HTML template
             current_time = datetime.datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-            
-            sendgrid_key = os.environ.get('SENDGRID_API_KEY')
-            use_sendgrid = bool(sendgrid_key)
             
             # Different themes based on source page
             if 'photo' in source_page.lower():
@@ -165,54 +161,27 @@ Message:
 Reply to: {user_email}
             """
             
-            message_obj = Mail(
-                from_email=('noreply@nguyenminh993.up.railway.app', 'Portfolio Contact Form'),
-                to_emails='nguyenminh090903@gmail.com',
-                subject=subject,
-                plain_text_content=plain_text,
-                html_content=html_content
-            )
-            
-            # Set reply-to to user's email
-            message_obj.reply_to = ReplyTo(user_email)
-            
-            # Add categories for tracking (must use Category objects)
-            message_obj.add_category(Category('portfolio-contact'))
-            message_obj.add_category(Category(source_page.lower().replace(' ', '-')))
-            
-            # Add attachment if present
-            if attachment:
-                file_content = base64.b64encode(attachment.read()).decode()
-                attached_file = Attachment(
-                    FileContent(file_content),
-                    FileName(attachment.name),
-                    FileType(attachment.content_type),
-                    Disposition('attachment')
-                )
-                message_obj.attachment = attached_file
-
+            # Simple SendGrid email - no complex features
             try:
-                sendgrid_key = os.environ.get('SENDGRID_API_KEY')
-                if sendgrid_key:
-                    # Try SendGrid first
-                    sg = SendGridAPIClient(sendgrid_key)
-                    response = sg.send(message_obj)
-                else:
-                    # Fallback to Django email
-                    from django.core.mail import EmailMultiAlternatives
-                    email = EmailMultiAlternatives(
-                        subject=subject,
-                        body=plain_text,
-                        from_email=settings.DEFAULT_FROM_EMAIL,
-                        to=['nguyenminh090903@gmail.com'],
-                        reply_to=[user_email]
-                    )
-                    email.attach_alternative(html_content, "text/html")
-                    if attachment:
-                        email.attach(attachment.name, attachment.read(), attachment.content_type)
-                    email.send()
+                api_key = os.environ.get('SENDGRID_API_KEY')
+                
+                if not api_key or api_key == 'YOUR_SENDGRID_API_KEY_HERE':
+                    raise Exception("SendGrid API key not configured")
+                
+                # Create simple email message
+                message = Mail(
+                    from_email='nguyenminh090903@gmail.com',
+                    to_emails='nguyenminh090903@gmail.com',
+                    subject=subject,
+                    html_content=html_content
+                )
+                
+                # Send via SendGrid
+                sg = SendGridAPIClient(api_key)
+                response = sg.send(message)
                 
                 return JsonResponse({'success': True, 'message': 'Message sent successfully!'})
+                
             except Exception as e:
                 import traceback
                 return JsonResponse({
