@@ -875,6 +875,9 @@
             const container = showcase.querySelector('.showcase-container');
             const dots = showcase.querySelectorAll('.dot');
             const images = showcase.querySelectorAll('.showcase-image');
+            
+            console.log(`${showcaseId}: Found ${images.length} images and ${dots.length} dots`);
+            
             let currentIndex = 0;
             let autoPlayInterval;
             
