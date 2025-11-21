@@ -5,7 +5,7 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from .forms import ContactForm
 import os
 from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail, Attachment, FileContent, FileName, FileType, Disposition
+from sendgrid.helpers.mail import Mail, Attachment, FileContent, FileName, FileType, Disposition, ReplyTo
 import base64
 
 def health_check(request):
@@ -171,7 +171,7 @@ Reply to: {user_email}
             )
             
             # Set reply-to to user's email
-            message_obj.reply_to = user_email
+            message_obj.reply_to = ReplyTo(user_email)
             
             # Add categories and custom args for tracking
             message_obj.category = ['portfolio-contact', source_page.lower().replace(' ', '-')]
