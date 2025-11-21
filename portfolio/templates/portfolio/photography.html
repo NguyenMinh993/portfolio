@@ -979,39 +979,53 @@
             initCarousel('film-showcase');
         }
         
-        // Desktop: Auto-rotate z-index to bring different images to front
-        function initDesktopRotation(showcaseId) {
+        // Desktop: Shuffle images positions every 3 seconds
+        function initDesktopShuffle(showcaseId) {
             if (window.innerWidth <= 768) return;
             
             const showcase = document.getElementById(showcaseId);
             if (!showcase) return;
             
-            const images = showcase.querySelectorAll('.showcase-image');
-            let currentFront = 2; // Start with img-3 (index 2) on top
+            const images = Array.from(showcase.querySelectorAll('.showcase-image'));
             
-            function rotateImages() {
-                images.forEach((img, index) => {
-                    if (index === currentFront) {
-                        img.style.zIndex = '10';
-                        img.style.transform = img.style.transform.replace(/scale\([^)]*\)/, '') + ' scale(1.1)';
-                    } else {
-                        const baseZIndex = index < currentFront ? index + 3 : index + 2;
-                        img.style.zIndex = baseZIndex;
-                        img.style.transform = img.style.transform.replace(/scale\([^)]*\)/, '');
-                    }
-                });
+            // Store original transforms
+            const originalTransforms = images.map(img => {
+                const style = window.getComputedStyle(img);
+                return {
+                    transform: img.style.transform || style.transform,
+                    zIndex: img.style.zIndex || style.zIndex
+                };
+            });
+            
+            function shufflePositions() {
+                // Get current transforms
+                const transforms = images.map(img => ({
+                    transform: img.style.transform,
+                    zIndex: img.style.zIndex
+                }));
                 
-                currentFront = (currentFront + 1) % images.length;
+                // Shuffle array
+                for (let i = transforms.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [transforms[i], transforms[j]] = [transforms[j], transforms[i]];
+                }
+                
+                // Apply shuffled transforms with smooth transition
+                images.forEach((img, index) => {
+                    img.style.transition = 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)';
+                    img.style.transform = transforms[index].transform;
+                    img.style.zIndex = transforms[index].zIndex;
+                });
             }
             
-            // Rotate every 3 seconds
-            setInterval(rotateImages, 3000);
+            // Shuffle every 3 seconds
+            setInterval(shufflePositions, 3000);
         }
         
-        // Init desktop rotation for both showcases
+        // Init desktop shuffle for both showcases
         if (window.innerWidth > 768) {
-            initDesktopRotation('photo-showcase');
-            initDesktopRotation('film-showcase');
+            initDesktopShuffle('photo-showcase');
+            initDesktopShuffle('film-showcase');
         }
 
         // Mobile Menu Toggle
